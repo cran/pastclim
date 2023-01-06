@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+<title>custom dataset</title>
+
+<script>// Pandoc 2.9 adds attributes on both header and div. We remove the former (to
+// be compatible with the behavior of Pandoc < 2.8).
+document.addEventListener('DOMContentLoaded', function(e) {
+  var hs = document.querySelectorAll("div.section[class*='level'] > :first-child");
+  var i, h, a;
+  for (i = 0; i < hs.length; i++) {
+    h = hs[i];
+    if (!/^h[1-6]$/i.test(h.tagName)) continue;  // it should be a header h1-h6
+    a = h.attributes;
+    while (a.length > 0) h.removeAttribute(a[0].name);
+  }
+});
+</script>
+
+<style type="text/css">
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+span.underline{text-decoration: underline;}
+div.column{display: inline-block; vertical-align: top; width: 50%;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+</style>
+
+
+
+<style type="text/css">
+code {
+white-space: pre;
+}
+.sourceCode {
+overflow: visible;
+}
+</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+{ counter-reset: source-line 0; }
+pre.numberSource code > span
+{ position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+{ content: counter(source-line);
+position: relative; left: -1em; text-align: right; vertical-align: baseline;
+border: none; display: inline-block;
+-webkit-touch-callout: none; -webkit-user-select: none;
+-khtml-user-select: none; -moz-user-select: none;
+-ms-user-select: none; user-select: none;
+padding: 0 4px; width: 4em;
+color: #aaaaaa;
+}
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
+div.sourceCode
+{ }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
+code span.ex { } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    var j = 0;
+    while (j < rules.length) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") {
+        j++;
+        continue;
+      }
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') {
+        j++;
+        continue;
+      }
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; } 
+code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">custom dataset</h1>
+
+
+
+<div id="formatting-a-custom-dataset-for-pastclim" class="section level2">
+<h2>Formatting a custom dataset for <code>pastclim</code></h2>
+<p>This guide is aimed at formatting data in such a way that they can be
+used with <code>pastclim</code>. <code>pastclim</code> is designed to
+extract data from <code>netcdf</code> files, a format commonly used for
+storing climate reconstructions. <code>netcdf</code> files have a number
+of advantages, as they can store compressed information, as well as
+allowing access to only the data required (e.g. extracting only the time
+steps or location of interest without reading all the data in memory).
+The expected format for <code>pastclim</code> requires that all time
+steps of a given variable be stored within a single netcdf file. How
+variables are combined (or not) is then flexible: you can have a
+separate file for each variable, collate everything within a single
+file, or create multiple files each including a number of variables. The
+time variable should be in years since 1950 (i.e. with negative integers
+indicating the past). There are a number of command line tools as well
+as R libraries (e.g. <code>cdo</code>, <code>gdal</code>,
+<code>terra</code>) that can help creating and editing netcdf files.</p>
+</div>
+<div id="an-example-the-trace21k-chelsea" class="section level2">
+<h2>An example: the Trace21k-CHELSEA</h2>
+<p>Here we provide a simple example of how to format such a dataset in
+R. We will use a version of the Trace21k dataset, downscaled to 30
+arcsecs using the CHELSEA algorithm(available from <a href="https://chelsa-climate.org/chelsa-trace21k/">this website</a>).
+The data are stored as geoTIFF files, one file per time step per
+variable. First, we need to collate all the files for a given variable
+(we will use <em>bio01</em> as an example) within a single
+<code>netcdf</code> file. As the original files are large, we will
+illustrate here how do to that for only a few time steps which were
+aggregated to 3x3 degrees to keep files sizes small.</p>
+<p>We start by translating each geoTIFF into a <code>netcdf</code> file.
+The files have the prefix
+<em>CHELSA_TraCE21k_bio01_-<strong>xxx</strong>_V1.0.small.tif</em>,
+where <strong>xxx</strong> is the number of the time step. We will only
+use 3 time step for illustrative purposes.</p>
+<p>We store all the files in a single directory, and create a
+<code>spatRaster</code> from a list of the files in that directory:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tiffs_path <span class="ot">&lt;-</span> <span class="fu">system.file</span>(<span class="st">&quot;extdata/CHELSA_bio01&quot;</span>,<span class="at">package=</span><span class="st">&quot;pastclim&quot;</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>list_of_tiffs <span class="ot">&lt;-</span> <span class="fu">file.path</span>(tiffs_path,<span class="fu">dir</span>(tiffs_path))</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>bio01 <span class="ot">&lt;-</span> terra<span class="sc">::</span><span class="fu">rast</span>(list_of_tiffs)</span></code></pre></div>
+<p><em>NOTE: <code>terra</code> has changed the way it handles time when
+reading from netcdf. The dev version of <code>terra</code> can more
+easily format netcdf files correctly, but this vignette presents a
+number of workarounds needed for the version on CRAN</em></p>
+<p>Now we need to set the time axis of the raster (in this case,
+reconstructions are every 100 years), and generate some user friendly
+names to layers in the raster:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">time</span>(bio01)<span class="ot">&lt;-</span><span class="fu">c</span>(<span class="dv">0</span>,<span class="sc">-</span><span class="dv">100</span>,<span class="sc">-</span><span class="dv">200</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(bio01)<span class="ot">&lt;-</span><span class="fu">paste</span>(<span class="st">&quot;bio01&quot;</span>,terra<span class="sc">::</span><span class="fu">time</span>(bio01),<span class="at">sep=</span><span class="st">&quot;_&quot;</span>)</span></code></pre></div>
+<p>Now we save the data as a <em>nc</em> file (we will use the temporary
+directory)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>nc_name <span class="ot">&lt;-</span> <span class="fu">file.path</span>(<span class="fu">tempdir</span>(),<span class="st">&quot;CHELSA_TraCE21k_bio01.nc&quot;</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">writeCDF</span>(bio01, <span class="at">filename =</span> nc_name, <span class="at">varname =</span> <span class="st">&quot;bio01&quot;</span>, <span class="at">overwrite=</span><span class="cn">TRUE</span>)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; Warning in new_CppObject_xp(fields$.module, fields$.pointer, ...): GDAL Message</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1: dimension #0 (time) is not a Time or Vertical dimension.</span></span></code></pre></div>
+<p>We also need to make sure that the <em>time</em> dimension has units
+and is labelled as <code>axis=&quot;T&quot;</code>, or <code>pastclim</code> will
+not be able to read the data properly.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>nc_in <span class="ot">&lt;-</span> ncdf4<span class="sc">::</span><span class="fu">nc_open</span>(nc_name, <span class="at">write=</span><span class="cn">TRUE</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>ncdf4<span class="sc">::</span><span class="fu">ncatt_put</span>(nc_in,<span class="at">varid=</span><span class="st">&quot;time&quot;</span>, </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>                 <span class="at">attname =</span> <span class="st">&quot;units&quot;</span>,</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>                 <span class="at">attval =</span> <span class="st">&quot;years since 1950-01-01 00:00:00.0&quot;</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>ncdf4<span class="sc">::</span><span class="fu">ncatt_put</span>(nc_in,<span class="at">varid=</span><span class="st">&quot;time&quot;</span>, </span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">attname =</span> <span class="st">&quot;long_name&quot;</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">attval =</span> <span class="st">&quot;years BP&quot;</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>ncdf4<span class="sc">::</span><span class="fu">ncatt_put</span>(nc_in, <span class="at">varid=</span><span class="st">&quot;time&quot;</span>, <span class="at">attname=</span><span class="st">&quot;axis&quot;</span>, <span class="at">attval =</span> <span class="st">&quot;T&quot;</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>ncdf4<span class="sc">::</span><span class="fu">nc_close</span>(nc_in)</span></code></pre></div>
+<p>We can now read in our custom netcdf file with
+<code>pastclim</code>.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(pastclim)</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>custom_series <span class="ot">&lt;-</span> <span class="fu">region_series</span>(<span class="at">bio_variables =</span> <span class="st">&quot;bio01&quot;</span>,</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>                                <span class="at">dataset =</span> <span class="st">&quot;custom&quot;</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                                <span class="at">path_to_nc =</span> nc_name</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>custom_series</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; class       : SpatRasterDataset </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; subdatasets : 1 </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; dimensions  : 174, 360 (nrow, ncol)</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; nlyr        : 3 </span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; resolution  : 1, 1  (x, y)</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; extent      : -180.0001, 179.9999, -90.00014, 83.99986  (xmin, xmax, ymin, ymax)</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; coord. ref. : lon/lat WGS 84 (EPSG:4326) </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; source(s)   : CHELSA_TraCE21k_bio01.nc </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; names       : bio01</span></span></code></pre></div>
+<p>As expected, there is only one variable (“bio01”) and 3 time steps
+(nlyr). We can get the times of those time steps with:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_time_steps</span>(<span class="at">dataset=</span><span class="st">&quot;custom&quot;</span>, <span class="at">path_to_nc =</span> nc_name)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; [1]    0 -100 -200</span></span></code></pre></div>
+<p>And we can slice the series and plot a give time point:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>climate_100<span class="ot">&lt;-</span><span class="fu">slice_region_series</span>(custom_series, <span class="at">time_bp =</span> <span class="sc">-</span><span class="dv">100</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>terra<span class="sc">::</span><span class="fu">plot</span>(climate_100)</span></code></pre></div>
+<p><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAASAAAAEgCAIAAACb4TnXAAAACXBIWXMAAA7DAAAOwwHHb6hkAAAgAElEQVR4nO2de3AU153vv+d0z1sPJHDAPASBxYBhEzCOYgtfEC7A3nDJDULZa7yBtSGQcnE3+MEWxrGdXFx+xOUUC06C43h3k0rWdmwegQo38RYJqetscMA46DpAgAhDhBAIrLc0j+4+5/7RPT0tCTw9MDMtaX6fmqKmW2fO/GY43/n9zq/P+TWTUoIgiNzAvTaAIIYyJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDDi+tm5c+e0adMikchtt9124MAB8+TZs2cXLlw4bNiw+fPn19fXe2uh55DAiOvk3LlzDz744Le//e2GhoZly5bV1NREo1EAtbW1VVVVZ86cWbBgwbJly7w202MY3QSduD5+9atfvfbaazt27AAQjUYjkcjp06fb2toWLlzY3NysqqoQYtSoUXv27Lnzzju9NtYzyIMR18m99967Y8eOeDx+6NChb33rW3fcccekSZNOnz49Y8YMVVUBcM6nT59++vRpry31EtVrAzLmyJEjXpsw4AgGg9OnT3fTMh6P//73v3fZbXl5eUVFhfm8rKzsqm0uXbq0cePG99577/nnn5dSXr58uaSkxP5raWlpc3Ozy7cbkgw+gd1+++2zZs3inHxviuPHj7///vu33npr2paPPfbY977/PTBX3TLJhg0bZj5/+umnH3744f5tKioqDhw40NraWlFRMXPmzPLy8s7OTvuvHR0d5eXlrt5siDL4BAbgd7/7XTgc9tqKAcRnP/tZXdfdtJw6dSoWgj3goqkO31d9LS0t1/r7li1bzp49u3XrVgBlZWWTJ08+efLkrFmzjh8/LoTgnEspT5w4MXnyZJefYkhCfqDgYAzc3eOTmTlz5muvvbZv377W1tYf/ehHx48fr66urqysHDly5Pe+9z0hxPbt20tKSu666668fKwByqD0YMSNwJBePFa7T2T+/Pnbt29/4okn6uvrb7nlll27dk2ZMgXA3r17V61atXnz5mnTpu3bt48xd/HoEIUEVnAw13FL2gs4K1euXLlyZZ+TEydO/O1vf5u5XUMTEljBwVyEfwDAYOTclqEPCazgcB8iksBuHBJYIVLQs6L8MiAEduzYsbfffruxsVHTtHHjxtXU1MyaNctro4YsDFCykeQg3OB9mn7btm21tbWc86qqqnnz5vn9/hUrVphXV4hcwJjbB3HjeO/Btm7devTo0eLiYvvMhg0bKisr169f76FVQxj3WUTixvFeYKqqtra2OgXW2dmpKIqHJg1tKETMJ94L7IUXXpgzZ051dfX48eMBNDQ07N+/n0LEHOIu/JMksGzgfbCwdOnSurq6RYsWhcPhYDB4991319XV1dbWem3XkMUMEd08iBvHew8GoKmpqb6+3swixuPxhoaGESNGeG3UkMXldTDyYFnB+98pyiLmmWwt9iXc4L0HS5tFfPzxx/fv3++RdUMT0k7e8N6DmVlE55k+WcR169b9wEHeDRxqcEBhrh5pqaurmzt3bklJyS233PLTn/7UPElVpZx478HSZhHHjRs3btw47wwcgmRlDtbe3l5dXf3000/v3r37nXfeWbt27S233FJZWVlbW7t48eKf/exn27dvX7Zs2dGjR7Ni8yDFew9GWcQ8w1w/Ppl33313xIgRjzzyyPDhw++///4FCxYcOHDgyJEjZ86ceeqpp8rLyzdt2nThwoWDBw/m41MNVLwXGIDDhw8XFRU99thjt99++3vvvffGG2+43ABPXAfMXXyYNkScN2+eve+ru7v7yJEjlZWVVFWqD94LbMOGDevXr/+P//iPL3/5y48//vjkyZP37NnzyCOPeG3XkMVM0994FrG4uHjMmDFIzsTuvffeuXPnUlWpPng/B3v99ddPnDhRWlr6hS984amnnlq2bNnq1av/9m//9uWXX/batCFIQ0NDz//Dpe+6aCqg6/rXvvY18+iLX/zi4sWL+zTp6enZtGnTjh07nnnmmVWrVgGgqlJ98F5giqL4/X4Aq1evrqqqsk96atSQpbS0VB2GsItCT9JA52/47NmzzcP+xaGEEIsXLx4+fPiJEydsrzV58mSqKuXEe4EtX7587ty5zzzzjFnH/ODBg9/4xjeWLl3qtV1Dk5KSkuB4DP+79C2ljiuv8bVr116rwb59+06dOnXo0KFoNGpWpS8qKrKrSq1bt+6VV16hqlLez8FefPHFZ5991v4JvHjxYk1NzUsvveStVUMYnqUkx+HDhy9cuDB27NhRSb773e8C2Lt3786dO0eOHPnmm29SVSnvPRiARYsW2c/Jd+Ual/vB0paU2rx58+bNm/ufp6pSTgaEwIg8Q4t98wYJrODg7jZcksCyAgmsECHt5A0SWMHhsvAoebCsQAIrOFzW5CCBZQUSWMHh0oMJElg2IIEVHFS2LZ+QwAoOlyFiYV8fzhoksIIjW/cHI9xAAis4mLtyAOTBsgIJrOCgOVg+IYEVHG5DRCIbkMAKjqyHiM3NzZqmmbubiT5QsFBwZL109pNPPrljxw77kMq2ORkEAmttbT3jwGtzBj3M9S3C0rJjx47a2trXXnvNebK2traqqurMmTMLFiwwN9EWMoMgRPzGN77xzjvveG3F0IExqFlayREKhebPn++sG2WXbVNVddOmTVu3bj148OCdd955A/YObgaBwL7//e87Dwt8h+yNk8UsolkGx1nY/Kpl20hgRKGQSCTirWg7lb6l0CGlPHLkiHk4YcKE4cOHp30VlW3rAwmssDh37tylP6Kr0UVT2ats2/r161esWJH2RVS2rQ8ksMJi8uTJn74bdzyavqXQ8MYi3/vvv59p/1S2zckgyCIS2SWn9wezy7YJIbZv305l20hgBQfL3u2LrgqVbXNCIWLBkfW1iLt373YeUtk2JySwgoO7uw5mFLTjyRoksIKDboKeT0hghUhWKvsSbiCBFRwuQ8TCzk1kDRJYwcHciYcElhVIYIUIhYh5gwRWcHBQiJg/SGAFB5XOzicksIIjW/cHI9wwIAR27Nixt99+u7GxUdO0cePG1dTUzJo1y2ujhiyMQsQ84v1axG3bttXW1nLOq6qq5s2b5/f7V6xYsXXrVq/tGrLkdLEv0QfvPdjWrVuPHj1aXFxsn9mwYUNlZeX69es9tGoIQyFiPvHeg6mq2tra6jzT2dmpKIpX9gx5zCyim0daqIBUWrz3YC+88MKcOXOqq6vHjx8PoKGhYf/+/RQi5o4sZhFra2sXL178s5/9bPv27cuWLTt69OiNmzfE8N6DLV26tK6ubtGiReFwOBgM3n333XV1dbW1tV7bNWTJVl1Eu4BUeXn5pk2bLly4cPDgwXx8gEGF9x4MQFNTU319vZlFjMfjDQ0NI0aM8NqoIUu2sohUQMoN3nswyiLmGXO7StpHWoFRASk3eO/B0mYR33rrrQ8++MAj64YaJ0+e/OAdnK1L31JKaJp2++23m4cPPfTQ6tWrnQ2ogJQbvBeYmUV0CqxPFtHv95eVlXlh2hBk4sSJUytxz6r0LQ0dL/2j+oMf/MB+YZ8GVEDKDd4LLG0W8Utf+pKz/eOPP55vE4cQPp+vuByfnp6+pa6BMTZ79uxrNbALSK1bt+6VV16hAlJXxfs5GGUR8wx3dxHMTSKECkilxXsPBqC8vNxN1VgiK7hcyeGmDRWQSsuAEFimXD71uVAwOQDsC6LCOSSSJ2XvcWIeCs4MFUJFIsL0AMABIdU4fD1gEpKBGxA+lgjD8EH6IBUwKSNNMtQOxQATUtHBJbgB8wlzrCsy7XHem8Q0LPnWvcxzIq5hM8BEmtFuaBmk71wWvaG1iFnBY4G1t7fPnTu3o6Oj/58++uija73KwAXDfJYci6khaJ7pswxBcEgOJqAFEehBIsJ6hiN4BTIA+EXFn1h7ORIhFitlWghGEEaYiZAUfgBQotLXLiPNUumU/jYoOlTdULUWHVc0dGsQEiGOUX5oEgAUMwnueHPOrfMqg8LAAR8HdBWSWXozVAjOeopkuAtcQPK+9veTXD8yUAMHfLSaPl94LLDS0tJ3333385///HPPPVdZWen2ZcEogsnngkNyaT3pPSiYhO5jgoNJqcQBMFUDAH9U+s/D8MMXl+UXAcjSFggu1YYurhXpAd54C7pGM+Fn0icNlUkmA+1g7Vq4My7RpqO1B90CcYGEhC4hJM4nUpMWDnBmDWIO+DlKFdzsR7eAyqAAmoTCdVNviIZgKBBchrphKDAU+DQwAQBcOD+jdVLylK82GzAB5nf/nWcxRCTS4n2IWFJSsmLFioqKCvc3+U344oZqeYywDwEOQ0KXMCQCyXEhJABwBkVyxEIsFoLkUk1Ach4rFqXNLKpCckQjLBYB12X5Zah6XEOjiEfGfDiupYO3jkOiDOAyeEmM+XOHL9oUR6uObgO6REwgJqCbAgOEhJ+jSEGQW39VGfwMQQ7OkJBoTCDEoTIUccQlAgAAXQKBaCAQB4B4AJJD84EJqDp0FYaKRACBKCSHoQAKBAcXUAwAUHTriarLjATmbi0ihYhZwXuBAXjiiScyat9lQOpoNwDAz1JDPC4R4fBza3wXK/AxBJiIhLoVXwKaH4IDhihthuSyrBlcwKclRIsmEeBQgDYDrTqKA5DhdhktMUYfby1qeb8LPT3WWwDW29kaM0/OiCAhkRDQJTjgZ/A7pB4VUBk4oDFEhRUuCoADEQWcC5/hQyiqCfjCMCQUBiiGwYQajUjJwQSLF4EbclgLuDBlZkgohmooercOI5O9JS6XSmUSdRLXZEAILFOO90AVQHLEC2C4ihCHAXQLtBsIcnAgKnBBh8oQYAhxLeLTQhw+hgBHhw4ABqBr4EBcwifQpuOyhk4DRzSMDmpiwrGfXBGxK0gIS13JiM0KAjWBhMT4IIoUXEygR8DMvJjK8ksAUBm6DPg5ihW06vAxK2i0+/HpKFXBoSEOmC4XMAAfEypDYFhzWAF0VaoaQt0ANAHOxKUEOg0A+giJK5kLjELEvDEoBdaiI2wAgJAIK+jQcTaGmIAm4OOYVYSPNagMAY64qUPAx1CkoFhBkakBZr08Kqzh3qIjIdBpoMtATOAnXd1qN3oMJKQlJHOuZfZmi0RIFCn4awycISEQE/AzcAY/gxBQGRLCChFVhh4jeQ3KnGElzdCS8ghxS8PFCroNhDiiDN0CJYp+OdRyUYNIQGWW6+ZAh4Hjspfy3UAhYj4ZlAJr09GVAMyxrllzIXMaFtPx2zb4GcYFUaRYgz7IoTJ0Gmjl8DErfgswSxVcWE4MyVEVE0hICAldQpNICEtm9jhWGfywPFtdlyUVMz3IAUiAQ4hUhyqzelNZqrAuT2rVFJ6fQagoVjBMsYyJSygSRSr+EkOzlpr1qQzDVFxIWH0i6cldQlnEfDIoBaYLiOQvt/mvqS49meqIA8e7MbMILTrGBnAxAT+DPzlHMvXGGYS0hBHi0CQSEl2GNWSjBroMaEmZGclkhkmQQ8jUPArMOtSEdVOSuABjUBm4hC7BWXJuxsEl9KRnK1cxIYhWHUUKQhwXE2jXcZlbm44F0G2gRcXHemr6lxBIAB26NQ8EIGRm2/spRMwng1JgPQKK0WteZMZvRlJymoQucbAdowM4HMf4IC4lACCkwJ90KbpEkWI9vyKRkOgxw04AgI/D0NGmQZeQjsmeScxAgCPA4eNQGEb60CPQoiHEISTiIpXD5MkAtViFJhBRoEsMUyGAMEeXgXYd7ToqAjgfR5eBIgWdBnoMjPTjXAwlKlpiKFdxIWHlJ80P6MxeCmQWIrqsTU91EbPCoBRYuw5FSaX1RPJXXCTze1Jaw1phEECHgUkhnOhBRwLc9D+AkLjMICRCCqIGVIaERDyZBowKtGq9wkL7F50x+Bh8QFSgTYchcTmBDh3TImjRwBk6dUhAl7hnOP6rDXGBkIIuAwkBABEFzQlUBNEmcVcJPuhCWMHuKwgr8DOciqJIwTAV73XAx6BLJCQaYkhIlKnWp7Otsj9vRiEireTIJ4NSYJfiqd9gc2jZrswcahJQGDjHh12oCOJCHO06xgfxYRdiScWYglEZonFoAnGBmJHKNzjjLvOeqzacQXJIQBOW02tNwMfxxw4oDCrDmCAkUO5DQwyf8uNkN9p1GAI+jlIfbivGzCK81gRD4nQPdInZxfh8Cfa3WjmbmMC7bQhyKAwNMQAQQIjjSqJXmCodTjVTgbmpKJSRV7Rpbm7WNM39Jc0hz6AUWFsCnKdm4fJqw0vh1hTrw04UqSjzIWrgSsKSkCYQ4ChR0ZxAp2alK64KN9NuyX8BKzViSi6swM9xKY6EDgA+Dl3ichwC8HN067h9GDgDJCIqYgK3FSMm8OcePD8qBFWPK1pc4JKGmMDsYpzoRruOZoGYgYSwLkTFBHwMFw1ojsgTDlFxlmGI6O462PWFiE8++eT06dPtzbJnz55ds2bN4cOHZ82a9dprr02aNOl6Oh3MDEqBtRvgOpBMxJlYq2gZuHmTb3NlIAMH/l87JkasSZomISUUhihDSwJtGiTA+pUBNEcXZ8kN9k6ZSYQU60paSwK6RImKmACHdT3KzHxIiaiBX13CXSPQo+NYFzjD/zGgMtR348SY6H03oTmOhAQHLmuICbzfgSIFXQYUBkPCEOgxLIPF1X5HmJ2NzDDLkYsQcceOHW+++eauXbu2bNlin6SyU4NSYB061GSUYw8DnlxKqzAoDD4OGOAMhkRIQVMMZT50G4gZMJLhn58jaqS6dY4oW1pmfMgZmJlylGAMH0cRF5ASKofC0KZZbUz3aEi0ayhWAUBh+N0VhFV0ahgewJUELkShMPy4AT89j4kRLL4Jv22FyjAqYKmrR099zIRIBb3oJyRTAyzTJEduQsRQKDR//vzTp0/bZ+yyU6qqbtq0aevWrQcPHiy0qjiDUmAJA5oB9PYzCoORzGoIQAjoDACktKK1Uh8iKs71IGZYDiHOAKSWQdgOgSWFpCTfQjpyA5fjSAjLnxgSwwPWhE1hiBooUtEcgyHRFEVEhcKQEIgnwIC2BBgDAwwJJuBX0RjF987i5hASAi1mG816Ox9DW/Jan/kpnCPemXHBNYLka+FyqVSmIeLixYsB7N+/3z5DZacwSAVmSECk5mBOGcBMeDAYySmTnrz8daoLo4MYHcTJTmuwGuZidJYcoBIKg2H2xsAlDFjRGpKBYocOXUBKKyUYUnDZXOIEhFUoDF064sK6zOXn6NKty2jmyg9znSFj0ATiBnokJHAxhiIVCYGEgCYgAV2kZG8LzIn92c0fgswixHyt5KCyUxjEApNJ9wUY5pwHYNK6zmuPDQkY0nroAscSCHD4ORhDj25dqDWHp+mgDGm5LwMpjbFk55pA1EBLwrr8FTOgCagcfo64QLeOMj8MCU1AE7g5hKYoin0IMBjSUruUqedRw/K93To6NYRV66+mVREV3TpwjfmV7cFM1+peC21tbfWnsPN1F1+yASHEq6++ah7OmTNn+vRepTz+9V//1ayPct9997388sv9e6CyUxi8AmMApKUuZmrM1IljrNm5AfNfc6DGBeLCCilNUdkj2Mw6QkIkpSXtsSutDnWBkGL9ugcVSImwYnkzH4fKEdUQUuDjGB1EWwJRHZwhoFgeyZz+GRJhBV166n0BdOtQGEp9aEkAQKdmCb4/rHcKUcqU3tLS1dXV8jGOf5i+pRAQQhw5csQ8HDduXB+BrV69uk8htz5Q2SkMEIFlen8wCUhp6YqxlNLMv101fW9OfpwTKgmU+BAzoHCU+HA5jrCCqAGJXhpzOgezw7CKkIIeHQmBgGolUexFJCqHlCj3I6jgU0F0alY6RDquhgPWKmSnMUKCAa3mvEuCMwS4dZ3NxjzvTHuavzXu75QxduzYO6vwv59J31LT8POdqbJt1wGVncJAWHF23ZV9rfgumcW2H+YZmXRojFl5RYVB5VC5tXVfZYgZYAwVYfQYKPMjoiKiIqxYs7I+vdkd6gI9OkRyeuZjCCqIqAgpUBjCCiIqLsXQFENT1FrIa2NX1TVk6rwEyv0Y5odM6m1EAACixjVjvxu5txDLUm16N1DZKe89WNrKvg899NB//ud/Ol8iJCD7zsK5c+rfOyVo4kzo2yHWpAjqu60qZab7igkoZsLdvKjlTC2avoJBAIrDhyApDFPGQQUlPjTHwBl8PBWd2mZIhy81z3RoqZDVdFxm/GnOHu2X25Y7P3umYrOKgrhplzm7d+92HlLZKe8Flray73PPPffP//zP9uGkSZOc0RFPDlU7nLMnZrDT6+YrWS+NqQw+bi3MlbAuTMcNaAI+BSpD3FyukZQZN+NGAPbKqWSK3N6HYs6vONBtIJCcmyEpqqvm5eyoTwAqhy6s6DHArb1qCsOnI2iMosewkpCyXw8ZwnoVvboW17dWiuiN9wJLW9m3rKysf+lse1wajhygOTGzfM7VhAHn4gwGBowL4WwPuES3DsagcgQUSGklQsxsYdzou2CKsZS2zY0zxb7UrpZuAypDl1miRloB57VGdCpQlACs6VxcWO7UNONkJ/wcAY6EsDTmFFXG+XS7mtUnQwLLBt4LbOnSpfPmzdu3b19DQ4MQ4u677/7Od77zybcvsge3c2ilYqdknsMpCVNRimNlhrns43Q3Jhfho+5emfSYsOTnY1bEqCTncnYcyB0aixko9aHbgC4QTq7n8HPEjZQln/BZbDisHWh22sP8EYmbtW24de27jzPM2IMJBsNFWsQA3Uf2xvFeYMi8sq/ar0AbHPOZPq7GqQpbWkpSYIwhIbCmAq/+Fcze6iJR5reuU3H0emH/l5v+5EoCIQU9BnwcMcMK7QBIacWKfaaIfbAXZJgFOYzkZsqEgJ8jrFpVq3TRS5FWMoZd0z1eA/cezEjbivhkBoTAMsWXnFf12bthYksLZnIi6b7ssNDOkinJNQ0/a8KXR+OtRgDQJMIKGFDqQ1vC8l3M8XKWnNfZbi2iokODn1tuZ0QAl+OIGmAMY0K4GLMECceKZDjWeTkxzDLBAoa0RGVfAQ8r6On9PXBAMEiZoQ4Eh+Hi/90ACezGGZQC8yvgjhjHFpfz8qsNQ29hJAXDkuUxOEOxivFBK+dR6gMAP4eeXNbk7MF5fzor+ETqOrKfI8itK8j2ymNfUodOY9D7iW2/hDXRMn2gylGkQhMQHDEDYcXybKz3q/oILz1uFhpSeJgNBqXAIgp4P8Odq86dZ7hjZDvjOjUZ8vk4NIEOHSEFIQUSGBVAYwyGRFBJvRyOBIkzSjQb+BgSAkUqihSEVRzrQIBDAi0JBJRUCp4l1zSin6cFrOIiiiPkM5cLt2vWysaIApWjQ+s1AxQS0YxiREpy5JFBKbAQB1eueZ3mqnEjHEPZznaoDAqHj6GqDL9otjaYmHv+gzy1wxL9pk8sqU97YBerlm/xK2iKIcB7yUlhvWaG/GreDEkPFjNQoiZLgzAAUBh0YT0ZF0K9SM0MTVoz+faYZMxFiMgoPMwGg1JgRQq40jc15wyZbK65CD053FVmlSI1I0NNQOHo0a0Eve0leL9OnI7IXPahAD06WhLgQLFqde50XHBeAe/tx1IZfyCowMcQF6lPFIa1W7RYRXMcEcXq0/yBELLvV5EGyVzcTSLDPTDENRiUAgurUJKG9xdAf0xv0L+NOUwl0G1YezTDSmroO3PxdrEAoNcZE11aW1TCamqTdX/9OGXWJ/K0Q0QktRS42kfSJCL2B0/aX6Li1Cd+/H4wmoPljUEpsKACVUmNYKCXAPpgj93+I9ZWgi4RUsCAYhVCpm4ydC0loJ8HS0gr72f/1dYhZ5YCzXpVTo1da5g79y87C0gpdsWepMcb4ceVRIbXmiVzl0UkhWWBQSmwIgWKo2QA76ex/nOn/tgRUEQBgCBHSEGAQ0r4HAuCzYezQzVZ7dBOojiDUrt4BuvtrDRhVSBF7xfaIu9Thc7uyimw1F3QAMDaLl2iZrhskELEPDIoBRbpnabvLy37F533E0AfBBBSEBco91la8iUL6/q5paX+q4qdOkmdTzZzFipMpeKU1Ets72cXD+3zFnaV4r4C6+3TUp86syvNJLD8MSgFFlbgV3q5iP4yMEekc25zVcyVhKWqNeexXZZZv56jV1goHAJ2xopAL0VdtRJon4oaZlWMq1Y1tHtw1u7lvf8EWEsfkVwYmQHS5VKpzARWV1f3T//0T0ePHh01atTTTz/9la98BVS2bYAILNMNl6Uqgr7U6FeT14vtQMseiPaw7lP72nnSpERBkFuicnbImXXPIesOsayvk4Sj7Kkme7maq8IdMadAX1/nLLhvl57vU5rOrp6dkL38mFtyECK2t7dXV1c//fTTu3fvfuedd9auXXvLLbdUVlZS2TbvBbZt27bt27cvX768qqoKwPnz51esWLFmzRp7P1h/yn0IqikBqKxv2OYUWB9p9R/QSAaEptcyb7+iOkIv89feGXb28Tz2FaOrvqPTDXLWd/ex5ph3mYrSHAXonQrsk7oUyUhSZFIyAADAmAuBsUwE9u67744YMeKRRx4BcP/997/11lsHDhxQFIXKtnkvsLQbLvszIYhwsG+c5qyebfR2Bfaf+pRqciYYAxxj/fCxlFCNZG/2Wzhxvl3/te3maxVY90karvC4w32m6gski/IWSVXjepdAQiCioNtRxNvHUp9UJA0zdaUlRejqjpU2kkO4+H/PZJX+vHnz7I2V3d3dR44cWb9+PZVtw0AQWNoNl/2ZGoIvADgGnDP/1v8QvX0LequFAxUBBHqKgYS1a58Laz+ZeZdxLuFq0CIAABD7SURBVGBX7ZUQQIADmg9AXNHMxU0BoRqKVcVGkZy1lcthLcqfq3jPJMgwY5/yS0PisgifEKXnEeqCFlAuzmT6CMgIQwnA/RARcCAmWWsZdIBDFjOoQBFjPik7JWuSapv0dUKJifJzsqgD/jhU3ZBQhfuqHGZJkyxfBysuLjb/B+vq6latWnXvvffOnTv3+9//PpVt815gaTdc9sffXRIyACZhjmlVB5PmUNNtCSU3xtv3RwcQFj7WWQotAMnBdRmIMkOVwSg6Avzyp5nhE2UNqbcx4ygmoOhS1RQmePunECtleoDFRnPjb8B8AT6M+cvA/RAJGDEAYKrU28H8rDECJciK/GBMap0y3iRlA0uUK5fLIf3cmMCUkSx4EwuUsmAJGIcUkAJcBeMQOhgHACmkFoMegzCkSEAkYCRkIo6GHik+1of/UpZeUhQdRsDlt33s2LF/29nybztbXLa3q2hs2bLl4Ycfdv6pT9m2np6eTZs27dix45lnnlm1ahWobBuAgSCw69hwyVtG8RAAQHIYPhh+BDoBcD3gT0SgRZhRBBGA9ANQgQDvkkoUTEByJlVIFVKB8Ev/x8wIA0IynUkVUlGio8EMqXZC7ZG+KADp7+Zdn2KxUcyIQIYZImDFjA9jwVKoYeaLsGAJAmEWLILPB1UF40xVk/e35FLX0dkuu9tkTxmL3wyRADi4CiXI/MUsPIyFShCOQFEhhfUqISAFdAOGLuM9DJCMQwomAjAS0ohDJKToNor/L0tEWPPfSDXO5GWX3/b06dNX1dz03MNj07bUNDnp747H4/FrNXCWbRNCLF68ePjw4SdOnLC9FpVtw0AQGICmpqb6+nozixiPxxsaGtII7OOZPOBnUgE4pAqmS6YBOngCTJNKTCpdUDshGcAhVCb9TCtjMgIZYlAlBBCXvJsZYal2ggmmFUP6IMJMMskMJhXoxYgnGDgkhxFhohgIMATBIoyXgPsAQOgwEjLWAS2GaAe4CkWF6ofqhz+AQJBxPwuFUTqMYTwASz8muu5UlNQS0BKWqAwdQoeegJ6QegJ6DEZc6jEYPdLolqIDsl2yjxEvY0aEiRAAsHcz+b6zn0Xct2/fqVOnDh06FI1Go9EogKKiIirbhoEgsOvIIjJZoeAmQJfyY8EvgOnS3wIAUoFQmREGkFSFyhAAihgLgAfBVABM6hAxKTohElLT7ZSHlfOXKoQKpjCoYCqYH0qA+fzgQSh+xn1Q/FD8zBeELwhFBeOMcwDS9DyANHTEBDMMyaJQFSvYM5FJHwXHjFCmHJfdCRgHV5kKyTl0lSkBGGGIEiZugohJI871GGQCjIP5wf4rg29cMriZs2UisMOHD1+4cGHs2JRjfOGFFzZu3Lh3795Vq1Zt3rx52rRphVm2jUmvL9hPmjSpTxYxGo1WVlZ++OHVy88yxpqP1YWDQSA5NFP0uWTba3eYo1W6j5waBzyZD2Fg9nNu2cG4te8SSKnIeVnaejth11WUMlkK56qG9Tf7k69wJVveueRLP33jzc985jNpPhfw3e9+9+ivn33u6xPSttR0OfG///ETQkTCDd57sOvIIkYm/E04HM69aYMGpvoyak5LpfKG9wJLm0Wsr6//6KOPvDNwyCFZ1q+DEdfCe4GlzSL++Mc/PnjwoIcWDjlYug10JlQzIAt4LzCkK9u2efNm52EBTpSzjcsQMfeGFAADQmBEXpEM0k0WkX7IsoDHAmtvb587d25HR0f/P9G8K2eQB8sfHgustLT03Xff/fznP//cc89VVlZ6a0zBQALLH96HiCUlJStWrKioqBgzZozXthQG5nqx9M0oyZEFvBcYgCeeeMJrEwqNDHeQEdfLwPqi6+vrvTahEOCQiqsHccMMLIHdd999XptQAJglA9w8iBtmQISIRN4h8eSJgfVFr1271msTCgEOa1Ncukcm7Ny5c9q0aZFI5Lbbbjtw4IB58uzZswsXLhw2bNj8+fMLM/4fWAJbs2aN1yYUAuZSKTcPt5w7d+7BBx/89re/3dDQsGzZspqaGnNXWG1tbVVV1ZkzZxYsWLBs2bKcfaKBy8ASGJEHmASTzM3DfZ8nTpxYtGjRF7/4xfLy8kcffbS9vf3ChQtHjhwxq0qVl5dv2rTpwoULBbimlARWgHBAdfdwy7333rtjx454PH7o0KFvfetbd9xxx6RJk65aVSpnH2qAQkmOAsTlavqMuXTp0saNG997773nn39eSnn58mWqKkUCKyyampoO/7n5mR+/n7alIaRhGGbdKAD33HPP/PnznQ36VJUCUFFRceDAgdbW1oqKipkzZ1JVKZDACo1AIOD3qaWRUNqWhpAAysrKzEP7iY2zqtSWLVvOnj1rbpMtKyubPHnyyZMnZ82aRVWlSGCFRXl5+Wcn3fT1ZbPTtkzoxktv/XHjxo1uup05c+aTTz65aNGiqqqqPXv2HD9+vLq6esqUKVRVipIcBQhz/XDL/Pnzt2/f/sQTT4wbN27btm27du2aMmUKgL179+7cuXPkyJFvvvlmYVaVIg9WgDDm4v8905sirVy5cuXKlX1OTpw40a5ZX5iQwAoQl1lE2hCWBUhgBQgJLH+QwAoQ7u7/veDmS7mABFaAkAfLHySwAoSRB8sbg0BgP/jBDz744AOvrRhKMLhJlxdeSj0XDAKBTZkypQCvn+QSChHzxyAQWHV1dXV1tX34ta99zTtbhgY5uQ5GXJVBIDAiyzDW65Zl12xGHiwLkMAKEAoR8wcJrADh5p0+00Dz3mxAAitAyIPlDxJY4cFAc7C8QdtVChAOprh6ZE5PT8/UqVP37NljHlLZNhJYwcHAGLiLx/XMwR599NGTJ0/ah1S2jQRWeJghoptHhuzZs+fPf/7ztGnTzEMq2wYSWEHCwVRXj0y4ePHio48++qMf/UhRrNiSyraBkhyFhmEYHT2xsxc/TttS0w0p5ZkzZ8zDkSNHRiKRazWWUj7wwANPPfXUhAkT7JNUtg0ksELj9OnTvzz4xz8c+0vallJKXdcXLlwIgDG2cePGPoXNnWXbpkyZEgwGH3jgAWcDKtsGElihMXXq1P+54K5v/69/TNsyoesV/2PtJ6T+nGXbli9fvmfPHntN9pe+9KX77rvvkUceobJtNAcrPMy1iFlNcrzxxhsyyYwZM37+85+/8cYblZWVZtk2IcT27dsLs2zbgPBgx44de/vttxsbGzVNGzduXE1NzaxZs7w2agjDGXexmj4bv7179+5dtWrV5s2bp02bRmXbvGHbtm3bt29fvnx5VVUVgPPnz69YsWLNmjXr16/32rShisulUtepsA8//NB+TmXbvBfY1q1bjx49WlxcbJ/ZsGFDZWUlCSxXMHcLeQvP2+QC7wWmqmpra6tTYJ2dnfa1FCL7MA4XISLtt8wK3gvshRdemDNnTnV19fjx4wE0NDTs37/fvI0AkRtcbrikBFgW8P5LXLp0aV1d3aJFi8LhcDAYvPvuu+vq6mpra722a+iSgywicS2892AAmpqa6uvrzSxiPB5vaGgYMWKE10YNYZirEJH0lQ28/xa3bdtWW1vLOa+qqpo3b57f71+xYgWFiDmEMXDu6kHcMN57MMoi5hnGGHMR/rlpQ6TFe4FRFjHfuMwictrRnAW8F1jaLOIDDzywd+9e7wwcelAWMX94/yWmzSL+8Ic/rHfgoalDBAaag+UN7z0YgMOHDxcVFT322GMHDhzYs2dPR0fHQw89ZG7UA+Dz+frfgZu4fihEzCPeC2zDhg2/+MUvZsyY8e///u9//etfV65cuWfPnlOnTr388stemzZEMbOIaSEPlg28/xJff/31P/zhDzt27NB1/amnnnr00Ud37txplyUicgAHV109MuHv//7vmYNLly6BqkoNBIEpiuL3+wGsXr3aXFBvnvTUqCENY4xzN4+Mej19+vSbb755NslNN90Eqio1EAS2fPnyuXPn/upXv1q2bNnNN9988ODBpUuXLl261Gu7hi65qSr1l7/85a677hqfhHNOVaUwEAT24osvPvvss3Z1lIsXL9bU1Lz00kveWjWUYRyK6urhmosXL3Z3d69ataqoqGjGjBk7d+4EVZUCMBCSHAAWLVpkPqmvryfflXMYwF3sRXHTJsnly5fvuOOODRs27Ny585133vnKV74yadIkqiqFASIwm/vuu+/w4cNeWzGUqa+v37f/N6fOfJS2pXBUlQLw4IMP3n///c4GzqpSL7/88u9//3vz/LJly37yk5/84he/+PSnP01VpQaWwIhcM3r06JkzZqz9x5VpW+q6/vtDhzdu3Gge3nrrrX0aOKtKHTp06MqVK1/4whfMQ1VVQ6HQ5MmTqarUwBLY2rVrvTZhiBMKhcaMGV0997+lbZnQNM75ggUL3HQbi8Vqamp27do1f/783/zmN7/+9a9ffPHFiRMnmlWl1q1b98orr1BVKe/pU9qSyA3ZX4s4d+7c119//Yknnqivr7/11lt37949ceJEUFWpgSYwIh9wxlQXZdtkZkulampqampq+pykqlIksMKDlkrlERJY4eFSYIUXzuUCEljhYV5oTosicm/K0IcEVnhQiJhHBp/AGGOfcKOqgkXTNDfNhg8f/uqrr7766qtuGo8dO/bGjCIGwFrETBFCyH7s3bt3yZIl/c/34Zvf/OY3v/nNtM2WLFmyd+/etM1Gjx7d2Nj4yW0aGxtHjx6dtqsbt3/27Nluvr3ly5enfRebhoaGXP9vDnkGn8AIYhBBAiOIHEICI4gcMviSHFdlwoQJc+bMSdvsM5/5jJve5syZ47yZ97VYsmRJaWnpJ7cpLS1dsmRJ2q6yaz8xcGAywxUxBEG4h0JEgsghJDCCyCEkMILIISQwgsghJDCCyCGDW2Dt7e1em3CdDF7LiYwYxALr6OiYO3eufThlyhRVVX0+n8/n27VrF4Cf//znU6dOnTRp0rZt27L+7jfSeR/L+3eVU8uJvOJ+6eeA4tlnn506deqECRPMQyHEiBEjnA0+/vjjsWPHnjt3rr29fcqUKX/605+y+O430nkfy/t3lVPLiTwzWD3YPffc89xzz9mHjY2NN998s7PBvn37qqurKyoqSkpKli9f/vbbb2fx3W+k8z6W9+8qp5YTeWawCmz27NmVlZX24UcffdTW1rZgwYJRo0atWrUqGo02NDSYt8wEUFFR0djYmMV3v5HO+1jev6ucWk7kmUEjsB/+8Ief+9znPve5z131LjilpaUPP/zwL3/5y2PHjl24cOHFF18UoteOd5f7EV2Sxc77d5VTy4k8M2gEtmbNmsOHDx8+fHjSpEn9/3rrrbeuX7/e5/MNHz78H/7hH+rq6saOHXv+/Hnzr+fPnx83blwWjcli5/27yqnlRL7xehJ4/Zw/f95OFfzLv/zLPffcE41G29vblyxZ8p3vfKe5uXnMmDHNzc3RaHT69OlHjhzJ4lvfYOdOy/t3lVPLiTwzRLarrFu3rqmpafr06Zqm1dbWfv3rX1dVdcuWLQsXLtR1/atf/eptt92Wxbe76aabstX5VbvKneVEnqHtKgSRQwbNHIwgBiMkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIISQwgsghJDCCyCEkMILIIf8fnWJczHAe5aoAAAAASUVORK5CYII=" /><!-- --></p>
+<p>Note that these reconstructions include the ocean and the ice sheets,
+and it would be much better to remove them as they are not needed for
+most ecological/archaeological studies (and it allows for smaller
+files).</p>
+</div>
+<div id="making-the-data-available-to-others" class="section level1">
+<h1>Making the data available to others</h1>
+<p>Once you have created suitably formatted netcdf files that can be
+used as custom datasets in <code>pastclim</code>, you can add those data
+officially to the package, and thus make them available to others. Here
+are the necessary steps:</p>
+<ol style="list-style-type: decimal">
+<li><p>Put your files in a freely available repository.</p></li>
+<li><p>Update the table used by <code>pastclim</code> to store
+information about available datasets. This table is found in
+“./inst/extdata/variable_table.csv”.</p></li>
+</ol>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(<span class="fu">read.csv</span>(<span class="fu">system.file</span>(<span class="st">&quot;extdata/dataset_list_included.csv&quot;</span>,</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>                     <span class="at">package=</span><span class="st">&quot;pastclim&quot;</span>)), <span class="at">n=</span><span class="dv">2</span>)</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   variable ncvar dataset monthly                 file_name download_path</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1    bio01  BIO1 Example   FALSE example_climate_v1.2.3.nc              </span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2    bio10 BIO10 Example   FALSE example_climate_v1.2.3.nc              </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;   file_name_orig download_path_orig version                           long_name</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1                                     1.2.3             annual mean temperature</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2                                     1.2.3 mean temperature of warmest quarter</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt;        abbreviated_name time_frame           units  units_exp dataset_list_v</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 1           ann. mean T       year degrees Celsius *degree*C*          1.2.3</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#&gt; 2 mean T of warmest qtr       year degrees Celsius *degree*C*</span></span></code></pre></div>
+<p>This includes the following fields:</p>
+<p><code>variable</code>: the variable name used by
+<code>pastclim</code></p>
+<p><code>ncvar</code>: the variable name within the <em>nc</em> file (it
+can be the same as <code>variable</code>)</p>
+<p><code>dataset</code>: the name of the dataset.</p>
+<p><code>monthly</code>: boolean on whether the variable is monthly.</p>
+<p><code>file_name</code>: the name of the file for that variable.</p>
+<p><code>download_path</code>: the URL to download the file.</p>
+<p><code>file_name_orig</code>: the name of the original file(s) used to
+create the <em>nc</em> dataset.</p>
+<p><code>download_path_orig</code>: the path of those original
+files.</p>
+<p><code>version</code>: the version of the dataset that you created</p>
+<p><code>long_name</code>: the long name for the variable</p>
+<p><code>abbreviated_name</code>: an abbreviated version of
+<code>long_name</code> (used for plot labels)</p>
+<p><code>time_frame</code>: either <code>year</code> or the appropriate
+<code>month</code></p>
+<p><code>units</code>: units for the variable, to be displayed in a
+plain text table</p>
+<p><code>units_exp</code>: units formatted to be included in
+<code>expression</code> when creating plot labels</p>
+<ol start="3" style="list-style-type: decimal">
+<li><p>Once you have added lines detailing the variables in your
+dataset, run the script “./raw-data/dataset_list_included.R” to store
+that information into the appropriate dataset in
+<code>pastclim</code>.</p></li>
+<li><p>Provide information on the new dataset in the file
+“./R/dataset_docs”, using <code>roxygen2</code> syntax. Make sure that
+you provide an appropriate reference for the original data, as it is
+important that users can refer back to the original source.</p></li>
+<li><p>Make a Pull Request on GitHub.</p></li>
+</ol>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

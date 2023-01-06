@@ -1,0 +1,34 @@
+## ---- include = FALSE---------------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+
+## -----------------------------------------------------------------------------
+library(pastclim)
+
+## ----echo=FALSE, results='hide'-----------------------------------------------
+data_path <- file.path(tempdir(),"pastclim_data")
+# clear it in case it exists already
+unlink(data_path, recursive = TRUE) 
+# set data path
+set_data_path(path_to_nc = data_path,
+              ask = FALSE,
+              write_config = FALSE,
+              copy_example = TRUE)
+
+## -----------------------------------------------------------------------------
+get_available_datasets()
+
+## ----eval=FALSE---------------------------------------------------------------
+#  help("Example")
+
+## ----echo=FALSE---------------------------------------------------------------
+pastclim:::get_dataset_info(dataset="Example")
+
+## ----echo=FALSE---------------------------------------------------------------
+for (i in sort(get_available_datasets())){
+  pastclim:::get_dataset_info(i)
+  cat("\n#######################################################\n")
+}
+
