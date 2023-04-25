@@ -4,11 +4,15 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 
-## ----install, eval=FALSE------------------------------------------------------
-#  devtools::install_github("EvolEcolGroup/pastclim")
+## ----install_cran, eval=FALSE-------------------------------------------------
+#  install.packages("pastclim")
+
+## ----install_dev, eval=FALSE--------------------------------------------------
+#  install.packages('terra', repos='https://rspatial.r-universe.dev')
+#  devtools::install_github("EvolEcolGroup/pastclim", ref="dev")
 
 ## ----install_vignette, eval=FALSE---------------------------------------------
-#  devtools::install_github("EvolEcolGroup/pastclim", build_vignettes = TRUE)
+#  devtools::install_github("EvolEcolGroup/pastclim", ref="dev", build_vignettes = TRUE)
 
 ## ----vignette, eval=FALSE-----------------------------------------------------
 #  vignette("pastclim_overview", package = "pastclim")
@@ -113,14 +117,14 @@ climate_20k <- region_slice(
 )
 
 ## -----------------------------------------------------------------------------
-library(terra)
 climate_20k
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
-terra::plot(climate_20k, main = names(climate_20k))
+terra::plot(climate_20k)
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
-terra::plot(climate_20k, main = var_labels(climate_20k, dataset = "Example"))
+terra::plot(climate_20k, 
+            main = var_labels(climate_20k, dataset = "Example", abbreviated = TRUE))
 
 ## -----------------------------------------------------------------------------
 climate_region <- region_series(
@@ -132,12 +136,15 @@ climate_region
 ## -----------------------------------------------------------------------------
 climate_region$bio01
 
+## -----------------------------------------------------------------------------
+time_bp(climate_region$bio01)
+
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
 terra::plot(climate_region$bio01, main=time_bp(climate_region$bio01))
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
 slice_10k <- slice_region_series(climate_region, time_bp = -10000)
-terra::plot(slice_10k, main = names(slice_10k))
+terra::plot(slice_10k)
 
 ## -----------------------------------------------------------------------------
 mis1_steps <- get_mis_time_steps(mis = 1, dataset = "Example")
@@ -164,8 +171,7 @@ europe_climate_20k <- region_slice(
   dataset = "Example",
   ext = region_extent$Europe
 )
-terra::plot(europe_climate_20k,
-            main = names(europe_climate_20k))
+terra::plot(europe_climate_20k)
 
 ## -----------------------------------------------------------------------------
 names(region_outline)
@@ -177,8 +183,7 @@ europe_climate_20k <- region_slice(
   dataset = "Example",
   crop = region_outline$Europe
 )
-terra::plot(europe_climate_20k,
-            main = names(europe_climate_20k))
+terra::plot(europe_climate_20k)
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
 library(sf)
@@ -188,8 +193,7 @@ climate_20k_afr_eurasia <- region_slice(
   bio_variables  = c("bio01", "bio10", "bio12"),
   dataset = "Example",
   crop = afr_eurasia)
-terra::plot(climate_20k_afr_eurasia,
-            main = names(climate_20k_afr_eurasia))
+terra::plot(climate_20k_afr_eurasia)
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
 custom_vec <- terra::vect("POLYGON ((0 70, 25 70, 50 80, 170 80, 170 10,
@@ -200,32 +204,49 @@ climate_20k_custom <- region_slice(
   bio_variables = c("bio01", "bio10", "bio12"),
   dataset = "Example",
   crop = custom_vec)
-terra::plot(climate_20k_custom, 
-            main = names(climate_20k_custom))
+terra::plot(climate_20k_custom)
 
 ## -----------------------------------------------------------------------------
 get_biome_classes("Example")
 
-## ---- fig.width=6, fig.height=5-----------------------------------------------
-climate_20k <- region_slice(
+## ---- fig.width=6, fig.height=2.5---------------------------------------------
+biome_20k <- region_slice(
   time_bp = -20000,
-  bio_variables = c("bio01", "bio10", "biome"),
+  bio_variables = c("biome"),
   dataset = "Example"
 )
-climate_20k$desert <- climate_20k$biome
-climate_20k$desert[climate_20k$desert != 21] <- FALSE
-climate_20k$desert[climate_20k$desert == 21] <- TRUE
-terra::plot(climate_20k, main = names(climate_20k))
+biome_20k$desert <- biome_20k$biome
+biome_20k$desert[biome_20k$desert != 21] <- FALSE
+biome_20k$desert[biome_20k$desert == 21] <- TRUE
+terra::plot(biome_20k)
+
+## ---- fig.width=6, fig.height=2.5---------------------------------------------
+ice_mask <- get_ice_mask(-20000, dataset = "Example")
+land_mask <- get_land_mask(-20000, dataset = "Example")
+terra::plot(c(ice_mask, land_mask))
+
+## -----------------------------------------------------------------------------
+ice_mask_vect <- as.polygons(ice_mask)
 
 ## ---- fig.width=6, fig.height=5-----------------------------------------------
-climate_20k <- region_slice(
-  time_bp = -20000,
-  bio_variables = c("bio01", "bio10"),
-  dataset = "Example"
-)
-climate_20k$ice_mask <- get_ice_mask(-20000, dataset = "Example")
-climate_20k$land_mask <- get_land_mask(-20000, dataset = "Example")
-terra::plot(climate_20k, main = names(climate_20k))
+plot(climate_20k, 
+     fun=function() polys(ice_mask_vect, col="gray", lwd=0.5))
+
+## -----------------------------------------------------------------------------
+locations_vect <- vect(locations, geom=c("longitude", "latitude"))
+locations_vect
+
+## ---- fig.width=6, fig.height=5-----------------------------------------------
+plot(europe_climate_20k, 
+     fun=function() points(locations_vect, col="red", cex=2))
+
+## ---- fig.width=6, fig.height=5-----------------------------------------------
+plot(europe_climate_20k, 
+     fun=function() {
+        polys(ice_mask_vect, col="gray", lwd=0.5)
+        points(locations_vect, col="red", cex=2)
+     })
+
 
 ## ---- fig.width=4, fig.height=4-----------------------------------------------
 bio_vars <- c("bio01", "bio10", "bio12")
@@ -281,12 +302,12 @@ sampled_climate <- sample_region_series(climate_ts, size = c(3,5))
 sampled_climate
 
 ## ---- fig.width=6, fig.height=4-----------------------------------------------
-Namerica_10k <- region_slice(dataset="Example", c("bio01"),
-                               time_bp=-10000, ext=region_extent$N_America)
-terra::plot(Namerica_10k)
+europe_10k <- region_slice(dataset="Example", c("bio01"),
+                               time_bp=-10000, ext=region_extent$Europe)
+terra::plot(europe_10k)
 
 ## ---- fig.width=6, fig.height=4-----------------------------------------------
-Namerica_ds <- terra::disagg(Namerica_10k, fact=25, method='bilinear')
-terra::plot(Namerica_ds)
+europe_ds <- terra::disagg(europe_10k, fact=25, method='bilinear')
+terra::plot(europe_ds)
 
 

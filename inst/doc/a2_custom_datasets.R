@@ -10,27 +10,13 @@ list_of_tiffs <- file.path(tiffs_path,dir(tiffs_path))
 bio01 <- terra::rast(list_of_tiffs)
 
 ## -----------------------------------------------------------------------------
-terra::time(bio01)<-c(0,-100,-200)
+library(pastclim)
+time_bp(bio01)<-c(0,-100,-200)
 names(bio01)<-paste("bio01",terra::time(bio01),sep="_")
 
 ## -----------------------------------------------------------------------------
 nc_name <- file.path(tempdir(),"CHELSA_TraCE21k_bio01.nc")
 terra::writeCDF(bio01, filename = nc_name, varname = "bio01", overwrite=TRUE)
-
-## -----------------------------------------------------------------------------
-nc_in <- ncdf4::nc_open(nc_name, write=TRUE)
-ncdf4::ncatt_put(nc_in,varid="time", 
-                 attname = "units",
-                 attval = "years since 1950-01-01 00:00:00.0")
-ncdf4::ncatt_put(nc_in,varid="time", 
-                 attname = "long_name",
-                 attval = "years BP")
-ncdf4::ncatt_put(nc_in, varid="time", attname="axis", attval = "T")
-ncdf4::nc_close(nc_in)
-
-
-## -----------------------------------------------------------------------------
-library(pastclim)
 
 ## ----echo=FALSE, results='hide'-----------------------------------------------
 data_path <- file.path(tempdir(),"pastclim_data")
