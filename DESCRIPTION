@@ -1,7 +1,7 @@
 Package: pastclim
 Type: Package
 Title: Manipulate Time Series of Palaeoclimate Reconstructions
-Version: 1.2.4
+Version: 2.0.0
 Authors@R: c(
        person("Michela", "Leonardi", role = "aut"),
        person(c("Emily","Y."), "Hallet", role = "ctb"),
@@ -23,17 +23,17 @@ Encoding: UTF-8
 LazyData: true
 LazyDataCompression: xz
 RoxygenNote: 7.2.3
-Depends: R (>= 4.0.0), methods, terra (>= 1.7.18)
-Imports: curl, ncdf4, utils
-Suggests: rmarkdown, knitr, sf, ggplot2, testthat (>= 3.0.0), spelling
+Depends: R (>= 4.0.0), terra (>= 1.7.18)
+Imports: curl, lubridate, methods, ncdf4, utils
+Suggests: rmarkdown, knitr, ggplot2, sf, testthat (>= 3.0.0), spelling
 VignetteBuilder: knitr
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2023-04-25 20:01:19 UTC; andrea
+Packaged: 2023-11-02 08:44:50 UTC; andrea
 Author: Michela Leonardi [aut],
   Emily Y. Hallet [ctb],
   Robert Beyer [ctb],
   Mario Krapp [ctb],
   Andrea Manica [aut, cre]
 Repository: CRAN
-Date/Publication: 2023-04-25 20:30:02 UTC
+Date/Publication: 2023-11-02 14:10:02 UTC
