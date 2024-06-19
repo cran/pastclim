@@ -49,7 +49,7 @@ overflow: visible;
 </style>
 <style type="text/css" data-origin="pandoc">
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -348,132 +348,265 @@ article on how to format custom datasets if you are interested). It is
 possible to get a list of all available datasets with:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">library</span>(pastclim)</span></code></pre></div>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" tabindex="-1"></a><span class="fu">get_available_datasets</span>()</span>
-<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; [1] &quot;Example&quot;           &quot;Beyer2020&quot;         &quot;Krapp2021&quot;        </span></span>
-<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; [4] &quot;Barreto2023&quot;       &quot;HYDE_3.3_baseline&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; for present day reconstructions, use &quot;WorldClim_2.1_RESm&quot;, where RES is an available resolution.</span></span>
-<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; for future predictions, use &quot;WorldClim_2.1_GCM_SSP_RESm&quot;, where GCM is the GCM model, SSP is the Shared Societ-economic Pathways scenario.</span></span>
-<span id="cb2-6"><a href="#cb2-6" tabindex="-1"></a><span class="co">#&gt; use help(&quot;WorldClim_2.1&quot;) for a list of available options</span></span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" tabindex="-1"></a><span class="co">#&gt; Barreto2023, Beyer2020, CHELSA_trace21k_1.0_0.5m_vsi, Example, HYDE_3.3_baseline, Krapp2021, paleoclim_1.0_10m, paleoclim_1.0_2.5m, paleoclim_1.0_5m</span></span>
+<span id="cb2-3"><a href="#cb2-3" tabindex="-1"></a><span class="co">#&gt; for present day reconstructions, use &quot;WorldClim_2.1_RESm&quot; or &quot;CHELSA_2.4_RESm&quot; where RES is an available resolution.</span></span>
+<span id="cb2-4"><a href="#cb2-4" tabindex="-1"></a><span class="co">#&gt; for future predictions, use &quot;WorldClim_2.1_GCM_SSP_RESm&quot; or &quot;CHELSA_2.1_GCM_SSP_RESm&quot;, where GCM is the GCM model, SSP is the Shared Socio-economic Pathways scenario.</span></span>
+<span id="cb2-5"><a href="#cb2-5" tabindex="-1"></a><span class="co">#&gt; use help(&quot;WorldClim_2.1&quot;) or help(&quot;CHELSA_2.1&quot;) for a list of available options</span></span></code></pre></div>
 <p>A more comprehensive list can be obtained with:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">list_available_datasets</span>()</span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;   [1] &quot;Example&quot;                                 </span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   [2] &quot;Beyer2020&quot;                               </span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   [3] &quot;Krapp2021&quot;                               </span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   [4] &quot;Barreto2023&quot;                             </span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   [5] &quot;WorldClim_2.1_10m&quot;                       </span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;   [6] &quot;WorldClim_2.1_5m&quot;                        </span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;   [7] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_10m&quot;     </span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;   [8] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_5m&quot;      </span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;   [9] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_10m&quot;     </span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;  [10] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_5m&quot;      </span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;  [11] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_10m&quot;     </span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;  [12] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_5m&quot;      </span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;  [13] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_10m&quot;     </span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;  [14] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_5m&quot;      </span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;  [15] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_10m&quot;    </span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;  [16] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_5m&quot;     </span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;  [17] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_10m&quot;    </span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;  [18] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_5m&quot;     </span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;  [19] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_10m&quot;    </span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt;  [20] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_5m&quot;     </span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;  [21] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_10m&quot;    </span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;  [22] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_5m&quot;     </span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;  [23] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_10m&quot;      </span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt;  [24] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_5m&quot;       </span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;  [25] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_10m&quot;      </span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;  [26] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_5m&quot;       </span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt;  [27] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_10m&quot;      </span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt;  [28] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_5m&quot;       </span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt;  [29] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_10m&quot;      </span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt;  [30] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_5m&quot;       </span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt;  [31] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_10m&quot;  </span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt;  [32] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_5m&quot;   </span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt;  [33] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_10m&quot;  </span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt;  [34] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_5m&quot;   </span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt;  [35] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_10m&quot;  </span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt;  [36] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_5m&quot;   </span></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt;  [37] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_10m&quot;  </span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt;  [38] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_5m&quot;   </span></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt;  [39] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_10m&quot;    </span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt;  [40] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_5m&quot;     </span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt;  [41] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_10m&quot;    </span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt;  [42] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_5m&quot;     </span></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt;  [43] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp370_10m&quot;    </span></span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt;  [44] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp370_5m&quot;     </span></span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt;  [45] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_10m&quot;    </span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt;  [46] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_5m&quot;     </span></span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt;  [47] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_10m&quot;      </span></span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt;  [48] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_5m&quot;       </span></span>
-<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt;  [49] &quot;WorldClim_2.1_GFDL-ESM4_ssp245_10m&quot;      </span></span>
-<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt;  [50] &quot;WorldClim_2.1_GFDL-ESM4_ssp245_5m&quot;       </span></span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt;  [51] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_10m&quot;      </span></span>
-<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#&gt;  [52] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_5m&quot;       </span></span>
-<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="co">#&gt;  [53] &quot;WorldClim_2.1_GFDL-ESM4_ssp585_10m&quot;      </span></span>
-<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="co">#&gt;  [54] &quot;WorldClim_2.1_GFDL-ESM4_ssp585_5m&quot;       </span></span>
-<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="co">#&gt;  [55] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_10m&quot;    </span></span>
-<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="co">#&gt;  [56] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_5m&quot;     </span></span>
-<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="co">#&gt;  [57] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_10m&quot;    </span></span>
-<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="co">#&gt;  [58] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_5m&quot;     </span></span>
-<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="co">#&gt;  [59] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_10m&quot;    </span></span>
-<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="co">#&gt;  [60] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_5m&quot;     </span></span>
-<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="co">#&gt;  [61] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_10m&quot;    </span></span>
-<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="co">#&gt;  [62] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_5m&quot;     </span></span>
-<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="co">#&gt;  [63] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_10m&quot;</span></span>
-<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="co">#&gt;  [64] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_5m&quot; </span></span>
-<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="co">#&gt;  [65] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_10m&quot;</span></span>
-<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="co">#&gt;  [66] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_5m&quot; </span></span>
-<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="co">#&gt;  [67] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp370_10m&quot;</span></span>
-<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="co">#&gt;  [68] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp370_5m&quot; </span></span>
-<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a><span class="co">#&gt;  [69] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_10m&quot;</span></span>
-<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a><span class="co">#&gt;  [70] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_5m&quot; </span></span>
-<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a><span class="co">#&gt;  [71] &quot;WorldClim_2.1_INM-CM5-0_ssp126_10m&quot;      </span></span>
-<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="co">#&gt;  [72] &quot;WorldClim_2.1_INM-CM5-0_ssp126_5m&quot;       </span></span>
-<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a><span class="co">#&gt;  [73] &quot;WorldClim_2.1_INM-CM5-0_ssp245_10m&quot;      </span></span>
-<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a><span class="co">#&gt;  [74] &quot;WorldClim_2.1_INM-CM5-0_ssp245_5m&quot;       </span></span>
-<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a><span class="co">#&gt;  [75] &quot;WorldClim_2.1_INM-CM5-0_ssp370_10m&quot;      </span></span>
-<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a><span class="co">#&gt;  [76] &quot;WorldClim_2.1_INM-CM5-0_ssp370_5m&quot;       </span></span>
-<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a><span class="co">#&gt;  [77] &quot;WorldClim_2.1_INM-CM5-0_ssp585_10m&quot;      </span></span>
-<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a><span class="co">#&gt;  [78] &quot;WorldClim_2.1_INM-CM5-0_ssp585_5m&quot;       </span></span>
-<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a><span class="co">#&gt;  [79] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_10m&quot;   </span></span>
-<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a><span class="co">#&gt;  [80] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_5m&quot;    </span></span>
-<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a><span class="co">#&gt;  [81] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_10m&quot;   </span></span>
-<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a><span class="co">#&gt;  [82] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_5m&quot;    </span></span>
-<span id="cb3-84"><a href="#cb3-84" tabindex="-1"></a><span class="co">#&gt;  [83] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_10m&quot;   </span></span>
-<span id="cb3-85"><a href="#cb3-85" tabindex="-1"></a><span class="co">#&gt;  [84] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_5m&quot;    </span></span>
-<span id="cb3-86"><a href="#cb3-86" tabindex="-1"></a><span class="co">#&gt;  [85] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_10m&quot;   </span></span>
-<span id="cb3-87"><a href="#cb3-87" tabindex="-1"></a><span class="co">#&gt;  [86] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_5m&quot;    </span></span>
-<span id="cb3-88"><a href="#cb3-88" tabindex="-1"></a><span class="co">#&gt;  [87] &quot;WorldClim_2.1_MIROC6_ssp126_10m&quot;         </span></span>
-<span id="cb3-89"><a href="#cb3-89" tabindex="-1"></a><span class="co">#&gt;  [88] &quot;WorldClim_2.1_MIROC6_ssp126_5m&quot;          </span></span>
-<span id="cb3-90"><a href="#cb3-90" tabindex="-1"></a><span class="co">#&gt;  [89] &quot;WorldClim_2.1_MIROC6_ssp245_10m&quot;         </span></span>
-<span id="cb3-91"><a href="#cb3-91" tabindex="-1"></a><span class="co">#&gt;  [90] &quot;WorldClim_2.1_MIROC6_ssp245_5m&quot;          </span></span>
-<span id="cb3-92"><a href="#cb3-92" tabindex="-1"></a><span class="co">#&gt;  [91] &quot;WorldClim_2.1_MIROC6_ssp370_10m&quot;         </span></span>
-<span id="cb3-93"><a href="#cb3-93" tabindex="-1"></a><span class="co">#&gt;  [92] &quot;WorldClim_2.1_MIROC6_ssp370_5m&quot;          </span></span>
-<span id="cb3-94"><a href="#cb3-94" tabindex="-1"></a><span class="co">#&gt;  [93] &quot;WorldClim_2.1_MIROC6_ssp585_10m&quot;         </span></span>
-<span id="cb3-95"><a href="#cb3-95" tabindex="-1"></a><span class="co">#&gt;  [94] &quot;WorldClim_2.1_MIROC6_ssp585_5m&quot;          </span></span>
-<span id="cb3-96"><a href="#cb3-96" tabindex="-1"></a><span class="co">#&gt;  [95] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_10m&quot;  </span></span>
-<span id="cb3-97"><a href="#cb3-97" tabindex="-1"></a><span class="co">#&gt;  [96] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_5m&quot;   </span></span>
-<span id="cb3-98"><a href="#cb3-98" tabindex="-1"></a><span class="co">#&gt;  [97] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_10m&quot;  </span></span>
-<span id="cb3-99"><a href="#cb3-99" tabindex="-1"></a><span class="co">#&gt;  [98] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_5m&quot;   </span></span>
-<span id="cb3-100"><a href="#cb3-100" tabindex="-1"></a><span class="co">#&gt;  [99] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_10m&quot;  </span></span>
-<span id="cb3-101"><a href="#cb3-101" tabindex="-1"></a><span class="co">#&gt; [100] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_5m&quot;   </span></span>
-<span id="cb3-102"><a href="#cb3-102" tabindex="-1"></a><span class="co">#&gt; [101] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_10m&quot;  </span></span>
-<span id="cb3-103"><a href="#cb3-103" tabindex="-1"></a><span class="co">#&gt; [102] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_5m&quot;   </span></span>
-<span id="cb3-104"><a href="#cb3-104" tabindex="-1"></a><span class="co">#&gt; [103] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_10m&quot;     </span></span>
-<span id="cb3-105"><a href="#cb3-105" tabindex="-1"></a><span class="co">#&gt; [104] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_5m&quot;      </span></span>
-<span id="cb3-106"><a href="#cb3-106" tabindex="-1"></a><span class="co">#&gt; [105] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_10m&quot;     </span></span>
-<span id="cb3-107"><a href="#cb3-107" tabindex="-1"></a><span class="co">#&gt; [106] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_5m&quot;      </span></span>
-<span id="cb3-108"><a href="#cb3-108" tabindex="-1"></a><span class="co">#&gt; [107] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_10m&quot;     </span></span>
-<span id="cb3-109"><a href="#cb3-109" tabindex="-1"></a><span class="co">#&gt; [108] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_5m&quot;      </span></span>
-<span id="cb3-110"><a href="#cb3-110" tabindex="-1"></a><span class="co">#&gt; [109] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_10m&quot;     </span></span>
-<span id="cb3-111"><a href="#cb3-111" tabindex="-1"></a><span class="co">#&gt; [110] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_5m&quot;      </span></span>
-<span id="cb3-112"><a href="#cb3-112" tabindex="-1"></a><span class="co">#&gt; [111] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_10m&quot;    </span></span>
-<span id="cb3-113"><a href="#cb3-113" tabindex="-1"></a><span class="co">#&gt; [112] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_5m&quot;     </span></span>
-<span id="cb3-114"><a href="#cb3-114" tabindex="-1"></a><span class="co">#&gt; [113] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_10m&quot;    </span></span>
-<span id="cb3-115"><a href="#cb3-115" tabindex="-1"></a><span class="co">#&gt; [114] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_5m&quot;     </span></span>
-<span id="cb3-116"><a href="#cb3-116" tabindex="-1"></a><span class="co">#&gt; [115] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_10m&quot;    </span></span>
-<span id="cb3-117"><a href="#cb3-117" tabindex="-1"></a><span class="co">#&gt; [116] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_5m&quot;     </span></span>
-<span id="cb3-118"><a href="#cb3-118" tabindex="-1"></a><span class="co">#&gt; [117] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_10m&quot;    </span></span>
-<span id="cb3-119"><a href="#cb3-119" tabindex="-1"></a><span class="co">#&gt; [118] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_5m&quot;     </span></span>
-<span id="cb3-120"><a href="#cb3-120" tabindex="-1"></a><span class="co">#&gt; [119] &quot;HYDE_3.3_baseline&quot;</span></span></code></pre></div>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="co">#&gt;   [1] &quot;Barreto2023&quot;                              </span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="co">#&gt;   [2] &quot;Beyer2020&quot;                                </span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="co">#&gt;   [3] &quot;CHELSA_2.1_0.5m&quot;                          </span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="co">#&gt;   [4] &quot;CHELSA_2.1_0.5m_vsi&quot;                      </span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="co">#&gt;   [5] &quot;CHELSA_2.1_GFDL-ESM4_ssp126_0.5m&quot;         </span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="co">#&gt;   [6] &quot;CHELSA_2.1_GFDL-ESM4_ssp126_0.5m_vsi&quot;     </span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="co">#&gt;   [7] &quot;CHELSA_2.1_GFDL-ESM4_ssp370_0.5m&quot;         </span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="co">#&gt;   [8] &quot;CHELSA_2.1_GFDL-ESM4_ssp370_0.5m_vsi&quot;     </span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="co">#&gt;   [9] &quot;CHELSA_2.1_GFDL-ESM4_ssp585_0.5m&quot;         </span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="co">#&gt;  [10] &quot;CHELSA_2.1_GFDL-ESM4_ssp585_0.5m_vsi&quot;     </span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="co">#&gt;  [11] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp126_0.5m&quot;      </span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="co">#&gt;  [12] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp126_0.5m_vsi&quot;  </span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="co">#&gt;  [13] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp370_0.5m&quot;      </span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="co">#&gt;  [14] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp370_0.5m_vsi&quot;  </span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="co">#&gt;  [15] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp585_0.5m&quot;      </span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="co">#&gt;  [16] &quot;CHELSA_2.1_IPSL-CM6A-LR_ssp585_0.5m_vsi&quot;  </span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="co">#&gt;  [17] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp126_0.5m&quot;     </span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="co">#&gt;  [18] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp126_0.5m_vsi&quot; </span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="co">#&gt;  [19] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp370_0.5m&quot;     </span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="co">#&gt;  [20] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp370_0.5m_vsi&quot; </span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="co">#&gt;  [21] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp585_0.5m&quot;     </span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="co">#&gt;  [22] &quot;CHELSA_2.1_MPI-ESM1-2-HR_ssp585_0.5m_vsi&quot; </span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="co">#&gt;  [23] &quot;CHELSA_2.1_MRI-ESM2-0_ssp126_0.5m&quot;        </span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="co">#&gt;  [24] &quot;CHELSA_2.1_MRI-ESM2-0_ssp126_0.5m_vsi&quot;    </span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="co">#&gt;  [25] &quot;CHELSA_2.1_MRI-ESM2-0_ssp370_0.5m&quot;        </span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="co">#&gt;  [26] &quot;CHELSA_2.1_MRI-ESM2-0_ssp370_0.5m_vsi&quot;    </span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="co">#&gt;  [27] &quot;CHELSA_2.1_MRI-ESM2-0_ssp585_0.5m&quot;        </span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="co">#&gt;  [28] &quot;CHELSA_2.1_MRI-ESM2-0_ssp585_0.5m_vsi&quot;    </span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="co">#&gt;  [29] &quot;CHELSA_2.1_UKESM1-0-LL_ssp126_0.5m&quot;       </span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="co">#&gt;  [30] &quot;CHELSA_2.1_UKESM1-0-LL_ssp126_0.5m_vsi&quot;   </span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="co">#&gt;  [31] &quot;CHELSA_2.1_UKESM1-0-LL_ssp370_0.5m&quot;       </span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="co">#&gt;  [32] &quot;CHELSA_2.1_UKESM1-0-LL_ssp370_0.5m_vsi&quot;   </span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="co">#&gt;  [33] &quot;CHELSA_2.1_UKESM1-0-LL_ssp585_0.5m&quot;       </span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="co">#&gt;  [34] &quot;CHELSA_2.1_UKESM1-0-LL_ssp585_0.5m_vsi&quot;   </span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="co">#&gt;  [35] &quot;CHELSA_trace21k_1.0_0.5m_vsi&quot;             </span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="co">#&gt;  [36] &quot;Example&quot;                                  </span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="co">#&gt;  [37] &quot;HYDE_3.3_baseline&quot;                        </span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="co">#&gt;  [38] &quot;Krapp2021&quot;                                </span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="co">#&gt;  [39] &quot;WorldClim_2.1_0.5m&quot;                       </span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="co">#&gt;  [40] &quot;WorldClim_2.1_10m&quot;                        </span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="co">#&gt;  [41] &quot;WorldClim_2.1_2.5m&quot;                       </span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="co">#&gt;  [42] &quot;WorldClim_2.1_5m&quot;                         </span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="co">#&gt;  [43] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_0.5m&quot;     </span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="co">#&gt;  [44] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_10m&quot;      </span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="co">#&gt;  [45] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_2.5m&quot;     </span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="co">#&gt;  [46] &quot;WorldClim_2.1_ACCESS-CM2_ssp126_5m&quot;       </span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="co">#&gt;  [47] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_0.5m&quot;     </span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="co">#&gt;  [48] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_10m&quot;      </span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="co">#&gt;  [49] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_2.5m&quot;     </span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="co">#&gt;  [50] &quot;WorldClim_2.1_ACCESS-CM2_ssp245_5m&quot;       </span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="co">#&gt;  [51] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_0.5m&quot;     </span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="co">#&gt;  [52] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_10m&quot;      </span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="co">#&gt;  [53] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_2.5m&quot;     </span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="co">#&gt;  [54] &quot;WorldClim_2.1_ACCESS-CM2_ssp370_5m&quot;       </span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="co">#&gt;  [55] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_0.5m&quot;     </span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="co">#&gt;  [56] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_10m&quot;      </span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="co">#&gt;  [57] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_2.5m&quot;     </span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="co">#&gt;  [58] &quot;WorldClim_2.1_ACCESS-CM2_ssp585_5m&quot;       </span></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="co">#&gt;  [59] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_0.5m&quot;    </span></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="co">#&gt;  [60] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_10m&quot;     </span></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="co">#&gt;  [61] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_2.5m&quot;    </span></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="co">#&gt;  [62] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp126_5m&quot;      </span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="co">#&gt;  [63] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_0.5m&quot;    </span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="co">#&gt;  [64] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_10m&quot;     </span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="co">#&gt;  [65] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_2.5m&quot;    </span></span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="co">#&gt;  [66] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp245_5m&quot;      </span></span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="co">#&gt;  [67] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_0.5m&quot;    </span></span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="co">#&gt;  [68] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_10m&quot;     </span></span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a><span class="co">#&gt;  [69] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_2.5m&quot;    </span></span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a><span class="co">#&gt;  [70] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp370_5m&quot;      </span></span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a><span class="co">#&gt;  [71] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_0.5m&quot;    </span></span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="co">#&gt;  [72] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_10m&quot;     </span></span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a><span class="co">#&gt;  [73] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_2.5m&quot;    </span></span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a><span class="co">#&gt;  [74] &quot;WorldClim_2.1_BCC-CSM2-MR_ssp585_5m&quot;      </span></span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a><span class="co">#&gt;  [75] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_0.5m&quot;      </span></span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a><span class="co">#&gt;  [76] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_10m&quot;       </span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a><span class="co">#&gt;  [77] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_2.5m&quot;      </span></span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a><span class="co">#&gt;  [78] &quot;WorldClim_2.1_CMCC-ESM2_ssp126_5m&quot;        </span></span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a><span class="co">#&gt;  [79] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_0.5m&quot;      </span></span>
+<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a><span class="co">#&gt;  [80] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_10m&quot;       </span></span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a><span class="co">#&gt;  [81] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_2.5m&quot;      </span></span>
+<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a><span class="co">#&gt;  [82] &quot;WorldClim_2.1_CMCC-ESM2_ssp245_5m&quot;        </span></span>
+<span id="cb3-84"><a href="#cb3-84" tabindex="-1"></a><span class="co">#&gt;  [83] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_0.5m&quot;      </span></span>
+<span id="cb3-85"><a href="#cb3-85" tabindex="-1"></a><span class="co">#&gt;  [84] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_10m&quot;       </span></span>
+<span id="cb3-86"><a href="#cb3-86" tabindex="-1"></a><span class="co">#&gt;  [85] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_2.5m&quot;      </span></span>
+<span id="cb3-87"><a href="#cb3-87" tabindex="-1"></a><span class="co">#&gt;  [86] &quot;WorldClim_2.1_CMCC-ESM2_ssp370_5m&quot;        </span></span>
+<span id="cb3-88"><a href="#cb3-88" tabindex="-1"></a><span class="co">#&gt;  [87] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_0.5m&quot;      </span></span>
+<span id="cb3-89"><a href="#cb3-89" tabindex="-1"></a><span class="co">#&gt;  [88] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_10m&quot;       </span></span>
+<span id="cb3-90"><a href="#cb3-90" tabindex="-1"></a><span class="co">#&gt;  [89] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_2.5m&quot;      </span></span>
+<span id="cb3-91"><a href="#cb3-91" tabindex="-1"></a><span class="co">#&gt;  [90] &quot;WorldClim_2.1_CMCC-ESM2_ssp585_5m&quot;        </span></span>
+<span id="cb3-92"><a href="#cb3-92" tabindex="-1"></a><span class="co">#&gt;  [91] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_0.5m&quot;  </span></span>
+<span id="cb3-93"><a href="#cb3-93" tabindex="-1"></a><span class="co">#&gt;  [92] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_10m&quot;   </span></span>
+<span id="cb3-94"><a href="#cb3-94" tabindex="-1"></a><span class="co">#&gt;  [93] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_2.5m&quot;  </span></span>
+<span id="cb3-95"><a href="#cb3-95" tabindex="-1"></a><span class="co">#&gt;  [94] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp126_5m&quot;    </span></span>
+<span id="cb3-96"><a href="#cb3-96" tabindex="-1"></a><span class="co">#&gt;  [95] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_0.5m&quot;  </span></span>
+<span id="cb3-97"><a href="#cb3-97" tabindex="-1"></a><span class="co">#&gt;  [96] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_10m&quot;   </span></span>
+<span id="cb3-98"><a href="#cb3-98" tabindex="-1"></a><span class="co">#&gt;  [97] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_2.5m&quot;  </span></span>
+<span id="cb3-99"><a href="#cb3-99" tabindex="-1"></a><span class="co">#&gt;  [98] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp245_5m&quot;    </span></span>
+<span id="cb3-100"><a href="#cb3-100" tabindex="-1"></a><span class="co">#&gt;  [99] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_0.5m&quot;  </span></span>
+<span id="cb3-101"><a href="#cb3-101" tabindex="-1"></a><span class="co">#&gt; [100] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_10m&quot;   </span></span>
+<span id="cb3-102"><a href="#cb3-102" tabindex="-1"></a><span class="co">#&gt; [101] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_2.5m&quot;  </span></span>
+<span id="cb3-103"><a href="#cb3-103" tabindex="-1"></a><span class="co">#&gt; [102] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp370_5m&quot;    </span></span>
+<span id="cb3-104"><a href="#cb3-104" tabindex="-1"></a><span class="co">#&gt; [103] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_0.5m&quot;  </span></span>
+<span id="cb3-105"><a href="#cb3-105" tabindex="-1"></a><span class="co">#&gt; [104] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_10m&quot;   </span></span>
+<span id="cb3-106"><a href="#cb3-106" tabindex="-1"></a><span class="co">#&gt; [105] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_2.5m&quot;  </span></span>
+<span id="cb3-107"><a href="#cb3-107" tabindex="-1"></a><span class="co">#&gt; [106] &quot;WorldClim_2.1_EC-Earth3-Veg_ssp585_5m&quot;    </span></span>
+<span id="cb3-108"><a href="#cb3-108" tabindex="-1"></a><span class="co">#&gt; [107] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_0.5m&quot;    </span></span>
+<span id="cb3-109"><a href="#cb3-109" tabindex="-1"></a><span class="co">#&gt; [108] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_10m&quot;     </span></span>
+<span id="cb3-110"><a href="#cb3-110" tabindex="-1"></a><span class="co">#&gt; [109] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_2.5m&quot;    </span></span>
+<span id="cb3-111"><a href="#cb3-111" tabindex="-1"></a><span class="co">#&gt; [110] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp126_5m&quot;      </span></span>
+<span id="cb3-112"><a href="#cb3-112" tabindex="-1"></a><span class="co">#&gt; [111] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_0.5m&quot;    </span></span>
+<span id="cb3-113"><a href="#cb3-113" tabindex="-1"></a><span class="co">#&gt; [112] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_10m&quot;     </span></span>
+<span id="cb3-114"><a href="#cb3-114" tabindex="-1"></a><span class="co">#&gt; [113] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_2.5m&quot;    </span></span>
+<span id="cb3-115"><a href="#cb3-115" tabindex="-1"></a><span class="co">#&gt; [114] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp245_5m&quot;      </span></span>
+<span id="cb3-116"><a href="#cb3-116" tabindex="-1"></a><span class="co">#&gt; [115] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_0.5m&quot;    </span></span>
+<span id="cb3-117"><a href="#cb3-117" tabindex="-1"></a><span class="co">#&gt; [116] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_10m&quot;     </span></span>
+<span id="cb3-118"><a href="#cb3-118" tabindex="-1"></a><span class="co">#&gt; [117] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_2.5m&quot;    </span></span>
+<span id="cb3-119"><a href="#cb3-119" tabindex="-1"></a><span class="co">#&gt; [118] &quot;WorldClim_2.1_FIO-ESM-2-0_ssp585_5m&quot;      </span></span>
+<span id="cb3-120"><a href="#cb3-120" tabindex="-1"></a><span class="co">#&gt; [119] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_0.5m&quot;      </span></span>
+<span id="cb3-121"><a href="#cb3-121" tabindex="-1"></a><span class="co">#&gt; [120] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_10m&quot;       </span></span>
+<span id="cb3-122"><a href="#cb3-122" tabindex="-1"></a><span class="co">#&gt; [121] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_2.5m&quot;      </span></span>
+<span id="cb3-123"><a href="#cb3-123" tabindex="-1"></a><span class="co">#&gt; [122] &quot;WorldClim_2.1_GFDL-ESM4_ssp126_5m&quot;        </span></span>
+<span id="cb3-124"><a href="#cb3-124" tabindex="-1"></a><span class="co">#&gt; [123] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_0.5m&quot;      </span></span>
+<span id="cb3-125"><a href="#cb3-125" tabindex="-1"></a><span class="co">#&gt; [124] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_10m&quot;       </span></span>
+<span id="cb3-126"><a href="#cb3-126" tabindex="-1"></a><span class="co">#&gt; [125] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_2.5m&quot;      </span></span>
+<span id="cb3-127"><a href="#cb3-127" tabindex="-1"></a><span class="co">#&gt; [126] &quot;WorldClim_2.1_GFDL-ESM4_ssp370_5m&quot;        </span></span>
+<span id="cb3-128"><a href="#cb3-128" tabindex="-1"></a><span class="co">#&gt; [127] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_0.5m&quot;    </span></span>
+<span id="cb3-129"><a href="#cb3-129" tabindex="-1"></a><span class="co">#&gt; [128] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_10m&quot;     </span></span>
+<span id="cb3-130"><a href="#cb3-130" tabindex="-1"></a><span class="co">#&gt; [129] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_2.5m&quot;    </span></span>
+<span id="cb3-131"><a href="#cb3-131" tabindex="-1"></a><span class="co">#&gt; [130] &quot;WorldClim_2.1_GISS-E2-1-G_ssp126_5m&quot;      </span></span>
+<span id="cb3-132"><a href="#cb3-132" tabindex="-1"></a><span class="co">#&gt; [131] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_0.5m&quot;    </span></span>
+<span id="cb3-133"><a href="#cb3-133" tabindex="-1"></a><span class="co">#&gt; [132] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_10m&quot;     </span></span>
+<span id="cb3-134"><a href="#cb3-134" tabindex="-1"></a><span class="co">#&gt; [133] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_2.5m&quot;    </span></span>
+<span id="cb3-135"><a href="#cb3-135" tabindex="-1"></a><span class="co">#&gt; [134] &quot;WorldClim_2.1_GISS-E2-1-G_ssp245_5m&quot;      </span></span>
+<span id="cb3-136"><a href="#cb3-136" tabindex="-1"></a><span class="co">#&gt; [135] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_0.5m&quot;    </span></span>
+<span id="cb3-137"><a href="#cb3-137" tabindex="-1"></a><span class="co">#&gt; [136] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_10m&quot;     </span></span>
+<span id="cb3-138"><a href="#cb3-138" tabindex="-1"></a><span class="co">#&gt; [137] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_2.5m&quot;    </span></span>
+<span id="cb3-139"><a href="#cb3-139" tabindex="-1"></a><span class="co">#&gt; [138] &quot;WorldClim_2.1_GISS-E2-1-G_ssp370_5m&quot;      </span></span>
+<span id="cb3-140"><a href="#cb3-140" tabindex="-1"></a><span class="co">#&gt; [139] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_0.5m&quot;    </span></span>
+<span id="cb3-141"><a href="#cb3-141" tabindex="-1"></a><span class="co">#&gt; [140] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_10m&quot;     </span></span>
+<span id="cb3-142"><a href="#cb3-142" tabindex="-1"></a><span class="co">#&gt; [141] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_2.5m&quot;    </span></span>
+<span id="cb3-143"><a href="#cb3-143" tabindex="-1"></a><span class="co">#&gt; [142] &quot;WorldClim_2.1_GISS-E2-1-G_ssp585_5m&quot;      </span></span>
+<span id="cb3-144"><a href="#cb3-144" tabindex="-1"></a><span class="co">#&gt; [143] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_0.5m&quot;</span></span>
+<span id="cb3-145"><a href="#cb3-145" tabindex="-1"></a><span class="co">#&gt; [144] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_10m&quot; </span></span>
+<span id="cb3-146"><a href="#cb3-146" tabindex="-1"></a><span class="co">#&gt; [145] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_2.5m&quot;</span></span>
+<span id="cb3-147"><a href="#cb3-147" tabindex="-1"></a><span class="co">#&gt; [146] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp126_5m&quot;  </span></span>
+<span id="cb3-148"><a href="#cb3-148" tabindex="-1"></a><span class="co">#&gt; [147] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_0.5m&quot;</span></span>
+<span id="cb3-149"><a href="#cb3-149" tabindex="-1"></a><span class="co">#&gt; [148] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_10m&quot; </span></span>
+<span id="cb3-150"><a href="#cb3-150" tabindex="-1"></a><span class="co">#&gt; [149] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_2.5m&quot;</span></span>
+<span id="cb3-151"><a href="#cb3-151" tabindex="-1"></a><span class="co">#&gt; [150] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp245_5m&quot;  </span></span>
+<span id="cb3-152"><a href="#cb3-152" tabindex="-1"></a><span class="co">#&gt; [151] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_0.5m&quot;</span></span>
+<span id="cb3-153"><a href="#cb3-153" tabindex="-1"></a><span class="co">#&gt; [152] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_10m&quot; </span></span>
+<span id="cb3-154"><a href="#cb3-154" tabindex="-1"></a><span class="co">#&gt; [153] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_2.5m&quot;</span></span>
+<span id="cb3-155"><a href="#cb3-155" tabindex="-1"></a><span class="co">#&gt; [154] &quot;WorldClim_2.1_HadGEM3-GC31-LL_ssp585_5m&quot;  </span></span>
+<span id="cb3-156"><a href="#cb3-156" tabindex="-1"></a><span class="co">#&gt; [155] &quot;WorldClim_2.1_INM-CM5-0_ssp126_0.5m&quot;      </span></span>
+<span id="cb3-157"><a href="#cb3-157" tabindex="-1"></a><span class="co">#&gt; [156] &quot;WorldClim_2.1_INM-CM5-0_ssp126_10m&quot;       </span></span>
+<span id="cb3-158"><a href="#cb3-158" tabindex="-1"></a><span class="co">#&gt; [157] &quot;WorldClim_2.1_INM-CM5-0_ssp126_2.5m&quot;      </span></span>
+<span id="cb3-159"><a href="#cb3-159" tabindex="-1"></a><span class="co">#&gt; [158] &quot;WorldClim_2.1_INM-CM5-0_ssp126_5m&quot;        </span></span>
+<span id="cb3-160"><a href="#cb3-160" tabindex="-1"></a><span class="co">#&gt; [159] &quot;WorldClim_2.1_INM-CM5-0_ssp245_0.5m&quot;      </span></span>
+<span id="cb3-161"><a href="#cb3-161" tabindex="-1"></a><span class="co">#&gt; [160] &quot;WorldClim_2.1_INM-CM5-0_ssp245_10m&quot;       </span></span>
+<span id="cb3-162"><a href="#cb3-162" tabindex="-1"></a><span class="co">#&gt; [161] &quot;WorldClim_2.1_INM-CM5-0_ssp245_2.5m&quot;      </span></span>
+<span id="cb3-163"><a href="#cb3-163" tabindex="-1"></a><span class="co">#&gt; [162] &quot;WorldClim_2.1_INM-CM5-0_ssp245_5m&quot;        </span></span>
+<span id="cb3-164"><a href="#cb3-164" tabindex="-1"></a><span class="co">#&gt; [163] &quot;WorldClim_2.1_INM-CM5-0_ssp370_0.5m&quot;      </span></span>
+<span id="cb3-165"><a href="#cb3-165" tabindex="-1"></a><span class="co">#&gt; [164] &quot;WorldClim_2.1_INM-CM5-0_ssp370_10m&quot;       </span></span>
+<span id="cb3-166"><a href="#cb3-166" tabindex="-1"></a><span class="co">#&gt; [165] &quot;WorldClim_2.1_INM-CM5-0_ssp370_2.5m&quot;      </span></span>
+<span id="cb3-167"><a href="#cb3-167" tabindex="-1"></a><span class="co">#&gt; [166] &quot;WorldClim_2.1_INM-CM5-0_ssp370_5m&quot;        </span></span>
+<span id="cb3-168"><a href="#cb3-168" tabindex="-1"></a><span class="co">#&gt; [167] &quot;WorldClim_2.1_INM-CM5-0_ssp585_0.5m&quot;      </span></span>
+<span id="cb3-169"><a href="#cb3-169" tabindex="-1"></a><span class="co">#&gt; [168] &quot;WorldClim_2.1_INM-CM5-0_ssp585_10m&quot;       </span></span>
+<span id="cb3-170"><a href="#cb3-170" tabindex="-1"></a><span class="co">#&gt; [169] &quot;WorldClim_2.1_INM-CM5-0_ssp585_2.5m&quot;      </span></span>
+<span id="cb3-171"><a href="#cb3-171" tabindex="-1"></a><span class="co">#&gt; [170] &quot;WorldClim_2.1_INM-CM5-0_ssp585_5m&quot;        </span></span>
+<span id="cb3-172"><a href="#cb3-172" tabindex="-1"></a><span class="co">#&gt; [171] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_0.5m&quot;   </span></span>
+<span id="cb3-173"><a href="#cb3-173" tabindex="-1"></a><span class="co">#&gt; [172] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_10m&quot;    </span></span>
+<span id="cb3-174"><a href="#cb3-174" tabindex="-1"></a><span class="co">#&gt; [173] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_2.5m&quot;   </span></span>
+<span id="cb3-175"><a href="#cb3-175" tabindex="-1"></a><span class="co">#&gt; [174] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp126_5m&quot;     </span></span>
+<span id="cb3-176"><a href="#cb3-176" tabindex="-1"></a><span class="co">#&gt; [175] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_0.5m&quot;   </span></span>
+<span id="cb3-177"><a href="#cb3-177" tabindex="-1"></a><span class="co">#&gt; [176] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_10m&quot;    </span></span>
+<span id="cb3-178"><a href="#cb3-178" tabindex="-1"></a><span class="co">#&gt; [177] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_2.5m&quot;   </span></span>
+<span id="cb3-179"><a href="#cb3-179" tabindex="-1"></a><span class="co">#&gt; [178] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp245_5m&quot;     </span></span>
+<span id="cb3-180"><a href="#cb3-180" tabindex="-1"></a><span class="co">#&gt; [179] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_0.5m&quot;   </span></span>
+<span id="cb3-181"><a href="#cb3-181" tabindex="-1"></a><span class="co">#&gt; [180] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_10m&quot;    </span></span>
+<span id="cb3-182"><a href="#cb3-182" tabindex="-1"></a><span class="co">#&gt; [181] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_2.5m&quot;   </span></span>
+<span id="cb3-183"><a href="#cb3-183" tabindex="-1"></a><span class="co">#&gt; [182] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp370_5m&quot;     </span></span>
+<span id="cb3-184"><a href="#cb3-184" tabindex="-1"></a><span class="co">#&gt; [183] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_0.5m&quot;   </span></span>
+<span id="cb3-185"><a href="#cb3-185" tabindex="-1"></a><span class="co">#&gt; [184] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_10m&quot;    </span></span>
+<span id="cb3-186"><a href="#cb3-186" tabindex="-1"></a><span class="co">#&gt; [185] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_2.5m&quot;   </span></span>
+<span id="cb3-187"><a href="#cb3-187" tabindex="-1"></a><span class="co">#&gt; [186] &quot;WorldClim_2.1_IPSL-CM6A-LR_ssp585_5m&quot;     </span></span>
+<span id="cb3-188"><a href="#cb3-188" tabindex="-1"></a><span class="co">#&gt; [187] &quot;WorldClim_2.1_MIROC6_ssp126_0.5m&quot;         </span></span>
+<span id="cb3-189"><a href="#cb3-189" tabindex="-1"></a><span class="co">#&gt; [188] &quot;WorldClim_2.1_MIROC6_ssp126_10m&quot;          </span></span>
+<span id="cb3-190"><a href="#cb3-190" tabindex="-1"></a><span class="co">#&gt; [189] &quot;WorldClim_2.1_MIROC6_ssp126_2.5m&quot;         </span></span>
+<span id="cb3-191"><a href="#cb3-191" tabindex="-1"></a><span class="co">#&gt; [190] &quot;WorldClim_2.1_MIROC6_ssp126_5m&quot;           </span></span>
+<span id="cb3-192"><a href="#cb3-192" tabindex="-1"></a><span class="co">#&gt; [191] &quot;WorldClim_2.1_MIROC6_ssp245_0.5m&quot;         </span></span>
+<span id="cb3-193"><a href="#cb3-193" tabindex="-1"></a><span class="co">#&gt; [192] &quot;WorldClim_2.1_MIROC6_ssp245_10m&quot;          </span></span>
+<span id="cb3-194"><a href="#cb3-194" tabindex="-1"></a><span class="co">#&gt; [193] &quot;WorldClim_2.1_MIROC6_ssp245_2.5m&quot;         </span></span>
+<span id="cb3-195"><a href="#cb3-195" tabindex="-1"></a><span class="co">#&gt; [194] &quot;WorldClim_2.1_MIROC6_ssp245_5m&quot;           </span></span>
+<span id="cb3-196"><a href="#cb3-196" tabindex="-1"></a><span class="co">#&gt; [195] &quot;WorldClim_2.1_MIROC6_ssp370_0.5m&quot;         </span></span>
+<span id="cb3-197"><a href="#cb3-197" tabindex="-1"></a><span class="co">#&gt; [196] &quot;WorldClim_2.1_MIROC6_ssp370_10m&quot;          </span></span>
+<span id="cb3-198"><a href="#cb3-198" tabindex="-1"></a><span class="co">#&gt; [197] &quot;WorldClim_2.1_MIROC6_ssp370_2.5m&quot;         </span></span>
+<span id="cb3-199"><a href="#cb3-199" tabindex="-1"></a><span class="co">#&gt; [198] &quot;WorldClim_2.1_MIROC6_ssp370_5m&quot;           </span></span>
+<span id="cb3-200"><a href="#cb3-200" tabindex="-1"></a><span class="co">#&gt; [199] &quot;WorldClim_2.1_MIROC6_ssp585_0.5m&quot;         </span></span>
+<span id="cb3-201"><a href="#cb3-201" tabindex="-1"></a><span class="co">#&gt; [200] &quot;WorldClim_2.1_MIROC6_ssp585_10m&quot;          </span></span>
+<span id="cb3-202"><a href="#cb3-202" tabindex="-1"></a><span class="co">#&gt; [201] &quot;WorldClim_2.1_MIROC6_ssp585_2.5m&quot;         </span></span>
+<span id="cb3-203"><a href="#cb3-203" tabindex="-1"></a><span class="co">#&gt; [202] &quot;WorldClim_2.1_MIROC6_ssp585_5m&quot;           </span></span>
+<span id="cb3-204"><a href="#cb3-204" tabindex="-1"></a><span class="co">#&gt; [203] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_0.5m&quot;  </span></span>
+<span id="cb3-205"><a href="#cb3-205" tabindex="-1"></a><span class="co">#&gt; [204] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_10m&quot;   </span></span>
+<span id="cb3-206"><a href="#cb3-206" tabindex="-1"></a><span class="co">#&gt; [205] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_2.5m&quot;  </span></span>
+<span id="cb3-207"><a href="#cb3-207" tabindex="-1"></a><span class="co">#&gt; [206] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp126_5m&quot;    </span></span>
+<span id="cb3-208"><a href="#cb3-208" tabindex="-1"></a><span class="co">#&gt; [207] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_0.5m&quot;  </span></span>
+<span id="cb3-209"><a href="#cb3-209" tabindex="-1"></a><span class="co">#&gt; [208] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_10m&quot;   </span></span>
+<span id="cb3-210"><a href="#cb3-210" tabindex="-1"></a><span class="co">#&gt; [209] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_2.5m&quot;  </span></span>
+<span id="cb3-211"><a href="#cb3-211" tabindex="-1"></a><span class="co">#&gt; [210] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp245_5m&quot;    </span></span>
+<span id="cb3-212"><a href="#cb3-212" tabindex="-1"></a><span class="co">#&gt; [211] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_0.5m&quot;  </span></span>
+<span id="cb3-213"><a href="#cb3-213" tabindex="-1"></a><span class="co">#&gt; [212] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_10m&quot;   </span></span>
+<span id="cb3-214"><a href="#cb3-214" tabindex="-1"></a><span class="co">#&gt; [213] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_2.5m&quot;  </span></span>
+<span id="cb3-215"><a href="#cb3-215" tabindex="-1"></a><span class="co">#&gt; [214] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp370_5m&quot;    </span></span>
+<span id="cb3-216"><a href="#cb3-216" tabindex="-1"></a><span class="co">#&gt; [215] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_0.5m&quot;  </span></span>
+<span id="cb3-217"><a href="#cb3-217" tabindex="-1"></a><span class="co">#&gt; [216] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_10m&quot;   </span></span>
+<span id="cb3-218"><a href="#cb3-218" tabindex="-1"></a><span class="co">#&gt; [217] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_2.5m&quot;  </span></span>
+<span id="cb3-219"><a href="#cb3-219" tabindex="-1"></a><span class="co">#&gt; [218] &quot;WorldClim_2.1_MPI-ESM1-2-HR_ssp585_5m&quot;    </span></span>
+<span id="cb3-220"><a href="#cb3-220" tabindex="-1"></a><span class="co">#&gt; [219] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_0.5m&quot;     </span></span>
+<span id="cb3-221"><a href="#cb3-221" tabindex="-1"></a><span class="co">#&gt; [220] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_10m&quot;      </span></span>
+<span id="cb3-222"><a href="#cb3-222" tabindex="-1"></a><span class="co">#&gt; [221] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_2.5m&quot;     </span></span>
+<span id="cb3-223"><a href="#cb3-223" tabindex="-1"></a><span class="co">#&gt; [222] &quot;WorldClim_2.1_MRI-ESM2-0_ssp126_5m&quot;       </span></span>
+<span id="cb3-224"><a href="#cb3-224" tabindex="-1"></a><span class="co">#&gt; [223] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_0.5m&quot;     </span></span>
+<span id="cb3-225"><a href="#cb3-225" tabindex="-1"></a><span class="co">#&gt; [224] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_10m&quot;      </span></span>
+<span id="cb3-226"><a href="#cb3-226" tabindex="-1"></a><span class="co">#&gt; [225] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_2.5m&quot;     </span></span>
+<span id="cb3-227"><a href="#cb3-227" tabindex="-1"></a><span class="co">#&gt; [226] &quot;WorldClim_2.1_MRI-ESM2-0_ssp245_5m&quot;       </span></span>
+<span id="cb3-228"><a href="#cb3-228" tabindex="-1"></a><span class="co">#&gt; [227] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_0.5m&quot;     </span></span>
+<span id="cb3-229"><a href="#cb3-229" tabindex="-1"></a><span class="co">#&gt; [228] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_10m&quot;      </span></span>
+<span id="cb3-230"><a href="#cb3-230" tabindex="-1"></a><span class="co">#&gt; [229] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_2.5m&quot;     </span></span>
+<span id="cb3-231"><a href="#cb3-231" tabindex="-1"></a><span class="co">#&gt; [230] &quot;WorldClim_2.1_MRI-ESM2-0_ssp370_5m&quot;       </span></span>
+<span id="cb3-232"><a href="#cb3-232" tabindex="-1"></a><span class="co">#&gt; [231] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_0.5m&quot;     </span></span>
+<span id="cb3-233"><a href="#cb3-233" tabindex="-1"></a><span class="co">#&gt; [232] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_10m&quot;      </span></span>
+<span id="cb3-234"><a href="#cb3-234" tabindex="-1"></a><span class="co">#&gt; [233] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_2.5m&quot;     </span></span>
+<span id="cb3-235"><a href="#cb3-235" tabindex="-1"></a><span class="co">#&gt; [234] &quot;WorldClim_2.1_MRI-ESM2-0_ssp585_5m&quot;       </span></span>
+<span id="cb3-236"><a href="#cb3-236" tabindex="-1"></a><span class="co">#&gt; [235] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_0.5m&quot;    </span></span>
+<span id="cb3-237"><a href="#cb3-237" tabindex="-1"></a><span class="co">#&gt; [236] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_10m&quot;     </span></span>
+<span id="cb3-238"><a href="#cb3-238" tabindex="-1"></a><span class="co">#&gt; [237] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_2.5m&quot;    </span></span>
+<span id="cb3-239"><a href="#cb3-239" tabindex="-1"></a><span class="co">#&gt; [238] &quot;WorldClim_2.1_UKESM1-0-LL_ssp126_5m&quot;      </span></span>
+<span id="cb3-240"><a href="#cb3-240" tabindex="-1"></a><span class="co">#&gt; [239] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_0.5m&quot;    </span></span>
+<span id="cb3-241"><a href="#cb3-241" tabindex="-1"></a><span class="co">#&gt; [240] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_10m&quot;     </span></span>
+<span id="cb3-242"><a href="#cb3-242" tabindex="-1"></a><span class="co">#&gt; [241] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_2.5m&quot;    </span></span>
+<span id="cb3-243"><a href="#cb3-243" tabindex="-1"></a><span class="co">#&gt; [242] &quot;WorldClim_2.1_UKESM1-0-LL_ssp245_5m&quot;      </span></span>
+<span id="cb3-244"><a href="#cb3-244" tabindex="-1"></a><span class="co">#&gt; [243] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_0.5m&quot;    </span></span>
+<span id="cb3-245"><a href="#cb3-245" tabindex="-1"></a><span class="co">#&gt; [244] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_10m&quot;     </span></span>
+<span id="cb3-246"><a href="#cb3-246" tabindex="-1"></a><span class="co">#&gt; [245] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_2.5m&quot;    </span></span>
+<span id="cb3-247"><a href="#cb3-247" tabindex="-1"></a><span class="co">#&gt; [246] &quot;WorldClim_2.1_UKESM1-0-LL_ssp370_5m&quot;      </span></span>
+<span id="cb3-248"><a href="#cb3-248" tabindex="-1"></a><span class="co">#&gt; [247] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_0.5m&quot;    </span></span>
+<span id="cb3-249"><a href="#cb3-249" tabindex="-1"></a><span class="co">#&gt; [248] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_10m&quot;     </span></span>
+<span id="cb3-250"><a href="#cb3-250" tabindex="-1"></a><span class="co">#&gt; [249] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_2.5m&quot;    </span></span>
+<span id="cb3-251"><a href="#cb3-251" tabindex="-1"></a><span class="co">#&gt; [250] &quot;WorldClim_2.1_UKESM1-0-LL_ssp585_5m&quot;      </span></span>
+<span id="cb3-252"><a href="#cb3-252" tabindex="-1"></a><span class="co">#&gt; [251] &quot;paleoclim_1.0_10m&quot;                        </span></span>
+<span id="cb3-253"><a href="#cb3-253" tabindex="-1"></a><span class="co">#&gt; [252] &quot;paleoclim_1.0_2.5m&quot;                       </span></span>
+<span id="cb3-254"><a href="#cb3-254" tabindex="-1"></a><span class="co">#&gt; [253] &quot;paleoclim_1.0_5m&quot;</span></span></code></pre></div>
 <p>For each dataset, you can get detailed information using the help
 function:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" tabindex="-1"></a><span class="fu">help</span>(<span class="st">&quot;Example&quot;</span>)</span></code></pre></div>
@@ -519,7 +652,7 @@ alphabetical order):</p>
 #&gt;      you subset the dataset to a small number of time steps of
 #&gt;      interest).
 #&gt; 
-#&gt;      If you use this dataset, make sure to cite the original
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
 #&gt;      publications:
 #&gt; 
 #&gt;      Barreto, E., Holden, P. B., Edwards, N. R., &amp; Rangel, T. F.
@@ -545,7 +678,7 @@ alphabetical order):</p>
 #&gt; 
 #&gt; Details:
 #&gt; 
-#&gt;      If you use this dataset, make sure to cite the original
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
 #&gt;      publication:
 #&gt; 
 #&gt;      Beyer, R.M., Krapp, M. &amp; Manica, A. High-resolution terrestrial
@@ -580,6 +713,104 @@ alphabetical order):</p>
 #&gt; 
 #&gt; 
 #&gt; #######################################################
+#&gt; Documentation for _CHELSA 2.1_
+#&gt; 
+#&gt; Description:
+#&gt; 
+#&gt;      _CHELSA_ version 2.1 is a database of high spatial resolution
+#&gt;      global weather and climate data, covering both the present and
+#&gt;      future projections.
+#&gt; 
+#&gt; Details:
+#&gt; 
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
+#&gt;      publication for the _CHELSA_ dataset:
+#&gt; 
+#&gt;      Karger, D.N., Conrad, O., B&lt;c3&gt;&lt;b6&gt;hner, J., Kawohl, T., Kreft, H.,
+#&gt;      Soria-Auza, R.W., Zimmermann, N.E., Linder, P., Kessler, M. (2017)
+#&gt;      Climatologies at high resolution for the Earth land surface areas.
+#&gt;      Scientific Data. 4 170122. doi:10.1038/sdata.2017.122
+#&gt;      &lt;https://doi.org/10.1038/sdata.2017.122&gt;
+#&gt; 
+#&gt;      *Present-day reconstructions* are based on the mean for the period
+#&gt;      1981-2000 and are available at at the high resolution of 0.5
+#&gt;      arc-minutes (_CHELSA_2.1_0.5m_). In &#39;pastclim&#39;, the datasets are
+#&gt;      given a date of 1990 CE (the mid-point of the period of interest).
+#&gt;      There are 19 &lt;e2&gt;&lt;80&gt;&lt;9c&gt;bioclimatic&lt;e2&gt;&lt;80&gt;&lt;9d&gt; variables, as well as monthly estimates
+#&gt;      for mean temperature, and precipitation. The dataset is very
+#&gt;      large, as it includes estimates for the oceans as well as the land
+#&gt;      masses. An alternative to downloading the very large files is to
+#&gt;      use virtual rasters, which allow the data to remain on the server,
+#&gt;      with only the pixels required for a given operation being
+#&gt;      downloaded. Virtual rasters can be used by choosing
+#&gt;      (_CHELSA_2.1_0.5m_vsi_)
+#&gt; 
+#&gt;      *Future projections* are based on the models in CMIP6, downscaled
+#&gt;      and de-biased using the CHELSA algorithm 2.1. Monthly values of
+#&gt;      mean temperature, and total precipitation, as well as 19
+#&gt;      bioclimatic variables were processed for 5 global climate models
+#&gt;      (GCMs), and for three Shared Socio-economic Pathways (SSPs): 126,
+#&gt;      370 and 585. Model and SSP can be chosen by changing the ending of
+#&gt;      the dataset name _CHELSA_2.1_GCM_SSP_RESm_.
+#&gt; 
+#&gt;      Available values for GCM are: &quot;GFDL-ESM4&quot;, &quot;IPSL-CM6A-LR&quot;,
+#&gt;      &quot;MPI-ESM1-2-HR&quot;, &quot;MRI-ESM2-0&quot;, and &quot;UKESM1-0-LL&quot;. For SSP, use:
+#&gt;      &quot;ssp126&quot;, &quot;ssp370&quot;, and &quot;ssp585&quot;. RES is currently limited to
+#&gt;      &quot;0.5m&quot;. Example dataset names are
+#&gt;      _CHELSA_2.1_GFDL-ESM4_ssp126_0.5m_ and
+#&gt;      _CHELSA_2.1_UKESM1-0-LL_ssp370_0.5m_
+#&gt; 
+#&gt;      As for present reconstructions, an alternative to downloading the
+#&gt;      very large files is to use virtual rasters. Simply append &quot;_vis&quot;
+#&gt;      to the name of the dataset of interest
+#&gt;      (_CHELSA_2.1_GFDL-ESM4_ssp126_0.5m_vsi_).
+#&gt; 
+#&gt;      The dataset are averages over 30 year periods (2011-2040,
+#&gt;      2041-2070, 2071-2100). In &#39;pastclim&#39;, the midpoints of the periods
+#&gt;      (2025, 2055, 2075) are used as the time stamps. All 3 periods are
+#&gt;      automatically downloaded for each combination of GCM model and
+#&gt;      SSP, and are selected as usual by defining the time in functions
+#&gt;      such as &#39;region_slice()&#39;.
+#&gt; 
+#&gt; 
+#&gt; #######################################################
+#&gt; Documentation for _CHELSA-TracCE21k_
+#&gt; 
+#&gt; Description:
+#&gt; 
+#&gt;      CHELSA-TraCE21k data provides monthly climate data for temperature
+#&gt;      and precipitation at 30 arc-sec spatial resolution in 100-year
+#&gt;      time steps for the last 21,000 years. Palaeo-orography at high
+#&gt;      spatial resolution and at each time step is created by combining
+#&gt;      high resolution information on glacial cover from current and Last
+#&gt;      Glacial Maximum (LGM) glacier databases with the interpolation of
+#&gt;      a dynamic ice sheet model (ICE6G) and a coupling to mean annual
+#&gt;      temperatures from CCSM3-TraCE21k. Based on the reconstructed
+#&gt;      palaeo-orography, mean annual temperature and precipitation was
+#&gt;      downscaled using the CHELSA V1.2 algorithm.
+#&gt; 
+#&gt; Details:
+#&gt; 
+#&gt;      More details on the dataset are available on its dedicated
+#&gt;      website.
+#&gt; 
+#&gt;      An alternative to downloading very large files is to use virtual
+#&gt;      rasters. Simply append &quot;_vis&quot; to the name of the dataset of
+#&gt;      interest (_CHELSA_trace21k_1.0_0.5m_vsi_). This is the recommended
+#&gt;      approach, and it is currently the only available version of the
+#&gt;      dataset.
+#&gt; 
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
+#&gt;      publication:
+#&gt; 
+#&gt;      Karger, D.N., Nobis, M.P., Normand, S., Graham, C.H., Zimmermann,
+#&gt;      N. (2023) CHELSA-TraCE21k &lt;e2&gt;&lt;80&gt;&lt;93&gt; High resolution (1 km) downscaled
+#&gt;      transient temperature and precipitation data since the Last
+#&gt;      Glacial Maximum. Climate of the Past. doi:10.5194/cp-2021-30
+#&gt;      &lt;https://doi.org/10.5194/cp-2021-30&gt;
+#&gt; 
+#&gt; 
+#&gt; #######################################################
 #&gt; Documentation for the Example dataset
 #&gt; 
 #&gt; Description:
@@ -590,7 +821,7 @@ alphabetical order):</p>
 #&gt; 
 #&gt; 
 #&gt; #######################################################
-#&gt; Documentation for HYDE 3.3 dataset
+#&gt; Documentation for _HYDE 3.3_ dataset
 #&gt; 
 #&gt; Description:
 #&gt; 
@@ -609,19 +840,22 @@ alphabetical order):</p>
 #&gt; Details:
 #&gt; 
 #&gt;      The period covered is 10 000 BCE to 2023 CE. Spatial resolution is
-#&gt;      5 arc minutes (approx. 85 km2 at the equator). The full HYDE 3.3
+#&gt;      5 arc minutes (approx. 85 km2 at the equator). The full _HYDE 3.3_
 #&gt;      release contains: a Baseline estimate scenario, a Lower estimate
 #&gt;      scenario and an Upper estimate scenario. Currently only the
 #&gt;      baseline scenario is available in &#39;pastclim&#39;
 #&gt; 
-#&gt;      If you use this dataset, make sure to cite the original
+#&gt;      More details on the dataset are available on its dedicated
+#&gt;      website.
+#&gt; 
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
 #&gt;      publication for the HYDE 3.2 (there is no current publication for
 #&gt;      3.3):
 #&gt; 
 #&gt;      Klein Goldewijk, K., Beusen, A., Doelman, J., and Stehfest, E.:
 #&gt;      Anthropogenic land-use estimates for the Holocene; HYDE 3.2, Earth
-#&gt;      Syst. Sci. Data, 9, 927-953, 2017. doi:10.5194/essd-9-1-2017
-#&gt;      &lt;https://doi.org/10.5194/essd-9-1-2017&gt;
+#&gt;      Syst. Sci. Data, 9, 927-953, 2017. doi:10.5194/essd-9-927-2017
+#&gt;      &lt;https://doi.org/10.5194/essd-9-927-2017&gt;
 #&gt; 
 #&gt; 
 #&gt; #######################################################
@@ -637,7 +871,7 @@ alphabetical order):</p>
 #&gt;      The units of several variables have been changed to match what is
 #&gt;      used in WorldClim.
 #&gt; 
-#&gt;      If you use this dataset, make sure to cite the original
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
 #&gt;      publication:
 #&gt; 
 #&gt;      Krapp, M., Beyer, R.M., Edmundson, S.L. et al. A statistics-based
@@ -672,10 +906,12 @@ alphabetical order):</p>
 #&gt; 
 #&gt;      WorldClim version 2.1 is a database of high spatial resolution
 #&gt;      global weather and climate data, covering both the present and
-#&gt;      future projections. If you use this dataset, make sure to cite the
-#&gt;      original publication:
+#&gt;      future projections.
 #&gt; 
 #&gt; Details:
+#&gt; 
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
+#&gt;      publication:
 #&gt; 
 #&gt;      Fick, S.E. and R.J. Hijmans, 2017. WorldClim 2: new 1km spatial
 #&gt;      resolution climate surfaces for global land areas. International
@@ -689,10 +925,9 @@ alphabetical order):</p>
 #&gt;      of the dataset name _WorldClim_2.1_RESm_, e.g. _WorldClim_2.1_10m_
 #&gt;      or _WorldClim_2.1_5m_ (currently, only 10m and 5m are currently
 #&gt;      available in &#39;pastclim&#39;). In &#39;pastclim&#39;, the datasets are given a
-#&gt;      date of 1985 CE (the mid-point of the period of interest),
-#&gt;      corresponding to a time_bp of 35. There are 19 &lt;e2&gt;&lt;80&gt;&lt;9c&gt;bioclimatic&lt;e2&gt;&lt;80&gt;&lt;9d&gt;
-#&gt;      variables, as well as monthly estimates for minimum, mean, and
-#&gt;      maximum temperature, and precipitation.
+#&gt;      date of 1985 CE (the mid-point of the period of interest). There
+#&gt;      are 19 &lt;e2&gt;&lt;80&gt;&lt;9c&gt;bioclimatic&lt;e2&gt;&lt;80&gt;&lt;9d&gt; variables, as well as monthly estimates for
+#&gt;      minimum, mean, and maximum temperature, and precipitation.
 #&gt; 
 #&gt;      *Future projections* are based on the models in CMIP6, downscaled
 #&gt;      and de-biased using WorldClim 2.1 for the present as a baseline.
@@ -711,7 +946,9 @@ alphabetical order):</p>
 #&gt;      the same values as for present reconstructions (i.e. &quot;10m&quot;, &quot;5m&quot;,
 #&gt;      &quot;2.5m&quot;, and &quot;0.5m&quot;). Example dataset names are
 #&gt;      _WorldClim_2.1_ACCESS-CM2_ssp245_10m_ and
-#&gt;      _WorldClim_2.1_MRI-ESM2-0_ssp370_5m_
+#&gt;      _WorldClim_2.1_MRI-ESM2-0_ssp370_5m_. Four combination (namely
+#&gt;      _FIO-ESM-2-0_ssp370_, _GFDL-ESM4_ssp245_, _GFDL-ESM4_ssp585_, and
+#&gt;      _HadGEM3-GC31-LL_ssp370_) are NOT available.
 #&gt; 
 #&gt;      The dataset are averages over 20 year periods (2021-2040,
 #&gt;      2041-2060, 2061-2080, 2081-2100). In &#39;pastclim&#39;, the midpoints of
@@ -719,6 +956,34 @@ alphabetical order):</p>
 #&gt;      All 4 periods are automatically downloaded for each combination of
 #&gt;      GCM model and SSP, and are selected as usual by defining the time
 #&gt;      in functions such as &#39;region_slice()&#39;.
+#&gt; 
+#&gt; 
+#&gt; #######################################################
+#&gt; Documentation for _Paleoclim_
+#&gt; 
+#&gt; Description:
+#&gt; 
+#&gt;      _Paleoclim_ is a set of high resolution paleoclimate
+#&gt;      reconstructions, mostly based on the CESM model, downscaled with
+#&gt;      the CHELSA dataset to 3 different spatial resolutions:
+#&gt;      &#39;paleoclim_1.0_2.5m&#39; at 2.5 arc-minutes (~5 km),
+#&gt;      &#39;paleoclim_1.0_5m&#39; at 5 arc-minutes (~10 km), and
+#&gt;      &#39;paleoclim_1.0_10m&#39; 10 arc-minutes (~20 km). All 19 biovariables
+#&gt;      are available. There are only a limited number of time slices
+#&gt;      available for this dataset; furthermore, currently only time
+#&gt;      slices from present to 130ka are available in &#39;pastclim&#39;.
+#&gt; 
+#&gt; Details:
+#&gt; 
+#&gt;      More details on the dataset are available on its dedicated
+#&gt;      website.
+#&gt; 
+#&gt;      IMPORTANT: If you use this dataset, make sure to cite the original
+#&gt;      publication:
+#&gt; 
+#&gt;      Brown, Hill, Dolan, Carnaval, Haywood (2018) PaleoClim, high
+#&gt;      spatial resolution paleoclimate surfaces for global land areas.
+#&gt;      Nature &lt;e2&gt;&lt;80&gt;&lt;93&gt; Scientific Data. 5:180254
 #&gt; 
 #&gt; 
 #&gt; #######################################################</code></pre>

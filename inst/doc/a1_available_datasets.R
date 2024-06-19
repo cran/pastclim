@@ -33,7 +33,10 @@ pastclim:::get_dataset_info(dataset = "Example")
 
 ## ----echo=FALSE---------------------------------------------------------------
 list_datasets <- list_available_datasets()
+# replace datasets with multiple versions with a single string
 list_datasets <- c(list_datasets[!grepl("WorldClim_2.1", list_datasets)], "WorldClim_2.1")
+list_datasets <- c(list_datasets[!grepl("paleoclim_1.0", list_datasets)], "paleoclim_1.0")
+list_datasets <- c(list_datasets[!grepl("CHELSA_2.1", list_datasets)], "CHELSA_2.1")
 for (i in sort(list_datasets)) {
   pastclim:::get_dataset_info(i)
   cat("\n#######################################################\n")

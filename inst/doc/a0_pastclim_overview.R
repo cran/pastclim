@@ -18,6 +18,10 @@ knitr::opts_chunk$set(
 #  vignette("pastclim_overview", package = "pastclim")
 
 ## -----------------------------------------------------------------------------
+library(pastclim)
+get_available_datasets()
+
+## -----------------------------------------------------------------------------
 citation("pastclim")
 
 ## ----eval=FALSE---------------------------------------------------------------
@@ -42,6 +46,9 @@ get_vars_for_dataset(dataset = "Example")
 
 ## -----------------------------------------------------------------------------
 get_time_bp_steps(dataset = "Example")
+
+## -----------------------------------------------------------------------------
+get_resolution(dataset = "Example")
 
 ## -----------------------------------------------------------------------------
 get_vars_for_dataset(dataset = "Beyer2020")
@@ -214,16 +221,18 @@ terra::plot(climate_20k_custom)
 ## -----------------------------------------------------------------------------
 get_biome_classes("Example")
 
-## ----fig.width=6, fig.height=2.5----------------------------------------------
+## ----fig.width=8, fig.height=6------------------------------------------------
 biome_20k <- region_slice(
   time_bp = -20000,
   bio_variables = c("biome"),
   dataset = "Example"
 )
+plot(biome_20k)
+
+## ----fig.width=6, fig.height=2.5----------------------------------------------
 biome_20k$desert <- biome_20k$biome
-biome_20k$desert[biome_20k$desert != 21] <- FALSE
-biome_20k$desert[biome_20k$desert == 21] <- TRUE
-terra::plot(biome_20k)
+biome_20k$desert[biome_20k$desert != 21] <- NA
+terra::plot(biome_20k$desert)
 
 ## ----fig.width=6, fig.height=2.5----------------------------------------------
 ice_mask <- get_ice_mask(-20000, dataset = "Example")
