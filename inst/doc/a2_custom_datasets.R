@@ -44,7 +44,7 @@ custom_series
 ## -----------------------------------------------------------------------------
 get_time_bp_steps(dataset = "custom", path_to_nc = nc_name)
 
-## -----------------------------------------------------------------------------
+## ----fig.width=6, fig.height=4------------------------------------------------
 climate_100 <- slice_region_series(custom_series, time_bp = -100)
 terra::plot(climate_100)
 

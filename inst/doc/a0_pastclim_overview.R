@@ -5,17 +5,20 @@ knitr::opts_chunk$set(
 )
 
 ## ----install_cran, eval=FALSE-------------------------------------------------
-#  install.packages("pastclim")
+# install.packages("pastclim")
 
 ## ----install_dev, eval=FALSE--------------------------------------------------
-#  install.packages("terra", repos = "https://rspatial.r-universe.dev")
-#  devtools::install_github("EvolEcolGroup/pastclim", ref = "dev")
+# install.packages("terra", repos = "https://rspatial.r-universe.dev")
+# devtools::install_github("EvolEcolGroup/pastclim", ref = "dev")
 
 ## ----install_vignette, eval=FALSE---------------------------------------------
-#  devtools::install_github("EvolEcolGroup/pastclim", ref = "dev", build_vignettes = TRUE)
+# devtools::install_github("EvolEcolGroup/pastclim",
+#   ref = "dev",
+#   build_vignettes = TRUE
+# )
 
 ## ----vignette, eval=FALSE-----------------------------------------------------
-#  vignette("pastclim_overview", package = "pastclim")
+# vignette("pastclim_overview", package = "pastclim")
 
 ## -----------------------------------------------------------------------------
 library(pastclim)
@@ -25,21 +28,21 @@ get_available_datasets()
 citation("pastclim")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  help("Beyer2020")
+# help("Beyer2020")
 
 ## ----echo=FALSE---------------------------------------------------------------
 pastclim:::get_dataset_info(dataset = "Beyer2020")
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  library(pastclim)
-#  set_data_path()
+# library(pastclim)
+# set_data_path()
 
 ## ----echo=FALSE, results='hide'-----------------------------------------------
 library(pastclim)
 set_data_path(on_CRAN = TRUE)
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  set_data_path(path_to_nc = "~/my_reconstructions")
+# set_data_path(path_to_nc = "~/my_reconstructions")
 
 ## -----------------------------------------------------------------------------
 get_vars_for_dataset(dataset = "Example")
@@ -66,7 +69,7 @@ get_vars_for_dataset(dataset = "Example", details = TRUE)
 get_downloaded_datasets()
 
 ## ----eval=FALSE---------------------------------------------------------------
-#  download_dataset(dataset = "Beyer2020", bio_variables = c("bio01", "bio05"))
+# download_dataset(dataset = "Beyer2020", bio_variables = c("bio01", "bio05"))
 
 ## -----------------------------------------------------------------------------
 locations <- data.frame(

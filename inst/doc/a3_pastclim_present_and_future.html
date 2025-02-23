@@ -60,7 +60,7 @@ div.sourceCode { overflow: auto; }
 }
 @media print {
 pre > code.sourceCode { white-space: pre-wrap; }
-pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
 }
 pre.numberSource code
 { counter-reset: source-line 0; }
@@ -412,7 +412,7 @@ precipitation.</p>
 <span id="cb5-2"><a href="#cb5-2" tabindex="-1"></a><span class="fu">get_vars_for_dataset</span>(<span class="st">&quot;CHELSA_2.1_0.5m&quot;</span>)</span>
 <span id="cb5-3"><a href="#cb5-3" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;bio01&quot; &quot;bio02&quot; &quot;bio03&quot; &quot;bio04&quot; &quot;bio05&quot; &quot;bio06&quot; &quot;bio07&quot; &quot;bio08&quot; &quot;bio09&quot;</span></span>
 <span id="cb5-4"><a href="#cb5-4" tabindex="-1"></a><span class="co">#&gt; [10] &quot;bio10&quot; &quot;bio11&quot; &quot;bio12&quot; &quot;bio13&quot; &quot;bio14&quot; &quot;bio15&quot; &quot;bio16&quot; &quot;bio17&quot; &quot;bio18&quot;</span></span>
-<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; [19] &quot;bio19&quot;</span></span></code></pre></div>
+<span id="cb5-5"><a href="#cb5-5" tabindex="-1"></a><span class="co">#&gt; [19] &quot;bio19&quot; &quot;npp&quot;</span></span></code></pre></div>
 <p>And the monthly variables</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" tabindex="-1"></a><span class="fu">get_vars_for_dataset</span>(<span class="st">&quot;CHELSA_2.1_0.5m&quot;</span>, <span class="at">monthly =</span> <span class="cn">TRUE</span>, <span class="at">annual =</span> <span class="cn">FALSE</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;temperature_01&quot;     &quot;temperature_02&quot;     &quot;temperature_03&quot;    </span></span>
@@ -452,12 +452,14 @@ the pixels that are needed. We can achieve that by using the dataset
 <p>We still need to download the dataset first, but rather than
 downloading all the files, this sets up the virtual raster (and so it is
 very fast!):</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">download_dataset</span>(<span class="at">dataset =</span> <span class="st">&quot;CHELSA_2.1_0.5m_vsi&quot;</span>, </span>
-<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>                 <span class="at">bio_variables =</span> <span class="fu">c</span>(<span class="st">&quot;bio12&quot;</span>,<span class="st">&quot;temperature_01&quot;</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" tabindex="-1"></a><span class="fu">download_dataset</span>(</span>
+<span id="cb9-2"><a href="#cb9-2" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;CHELSA_2.1_0.5m_vsi&quot;</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" tabindex="-1"></a>  <span class="at">bio_variables =</span> <span class="fu">c</span>(<span class="st">&quot;bio12&quot;</span>, <span class="st">&quot;temperature_01&quot;</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" tabindex="-1"></a>)</span></code></pre></div>
 <p>Once downloaded, we can use it as any other dataset:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" tabindex="-1"></a>climate_present <span class="ot">&lt;-</span> <span class="fu">region_slice</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" tabindex="-1"></a>  <span class="at">time_ce =</span> <span class="dv">1990</span>,</span>
-<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">bio_variables =</span> <span class="fu">c</span>(<span class="st">&quot;bio12&quot;</span>,<span class="st">&quot;temperature_01&quot;</span>),</span>
+<span id="cb10-3"><a href="#cb10-3" tabindex="-1"></a>  <span class="at">bio_variables =</span> <span class="fu">c</span>(<span class="st">&quot;bio12&quot;</span>, <span class="st">&quot;temperature_01&quot;</span>),</span>
 <span id="cb10-4"><a href="#cb10-4" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;CHELSA_2.1_0.5m_vsi&quot;</span></span>
 <span id="cb10-5"><a href="#cb10-5" tabindex="-1"></a>)</span></code></pre></div>
 <p>This is ideal if you just need to extract climate for a number of
@@ -476,7 +478,7 @@ models (GCMs), and for four Shared Socio-economic Pathways (SSPs): 126,
 245, 370 and 585. Model and SSP can be chosen by changing the ending of
 the dataset name <em>WorldClim_2.1_GCM_SSP_RESm</em>.</p>
 <p>A complete list of available combinations can be obtained with:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">list_available_datasets</span>()[<span class="fu">grepl</span>(<span class="st">&quot;WorldClim_2.1&quot;</span>,<span class="fu">list_available_datasets</span>())]</span>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" tabindex="-1"></a><span class="fu">list_available_datasets</span>()[<span class="fu">grepl</span>(<span class="st">&quot;WorldClim_2.1&quot;</span>, <span class="fu">list_available_datasets</span>())]</span>
 <span id="cb11-2"><a href="#cb11-2" tabindex="-1"></a><span class="co">#&gt;   [1] &quot;WorldClim_2.1_0.5m&quot;                       </span></span>
 <span id="cb11-3"><a href="#cb11-3" tabindex="-1"></a><span class="co">#&gt;   [2] &quot;WorldClim_2.1_10m&quot;                        </span></span>
 <span id="cb11-4"><a href="#cb11-4" tabindex="-1"></a><span class="co">#&gt;   [3] &quot;WorldClim_2.1_2.5m&quot;                       </span></span>
@@ -734,7 +736,7 @@ three Shared Socio-economic Pathways (SSPs): 126, 370 and 585. Model and
 SSP can be chosen by changing the ending of the dataset name
 <em>CHELSA_2.1_GCM_SSP_0.5m</em>.</p>
 <p>A complete list of available combinations can be obtained with:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">list_available_datasets</span>()[<span class="fu">grepl</span>(<span class="st">&quot;CHELSA_2.1&quot;</span>,<span class="fu">list_available_datasets</span>())]</span>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" tabindex="-1"></a><span class="fu">list_available_datasets</span>()[<span class="fu">grepl</span>(<span class="st">&quot;CHELSA_2.1&quot;</span>, <span class="fu">list_available_datasets</span>())]</span>
 <span id="cb16-2"><a href="#cb16-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;CHELSA_2.1_0.5m&quot;                         </span></span>
 <span id="cb16-3"><a href="#cb16-3" tabindex="-1"></a><span class="co">#&gt;  [2] &quot;CHELSA_2.1_0.5m_vsi&quot;                     </span></span>
 <span id="cb16-4"><a href="#cb16-4" tabindex="-1"></a><span class="co">#&gt;  [3] &quot;CHELSA_2.1_GFDL-ESM4_ssp126_0.5m&quot;        </span></span>
@@ -770,18 +772,21 @@ SSP can be chosen by changing the ending of the dataset name
 <p>Note that there is a virtual option for each dataset. So, if we are
 interested in the the GFDL-ESM4 model, with ssp set to 126 , we can get
 the available variables:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">get_vars_for_dataset</span>(<span class="at">dataset =</span> <span class="st">&quot;CHELSA_2.1_UKESM1-0-LL_ssp585_0.5m&quot;</span>, <span class="at">monthly=</span><span class="cn">TRUE</span>)</span>
-<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;bio01&quot;            &quot;bio02&quot;            &quot;bio03&quot;            &quot;bio04&quot;           </span></span>
-<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;bio05&quot;            &quot;bio06&quot;            &quot;bio07&quot;            &quot;bio08&quot;           </span></span>
-<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;bio09&quot;            &quot;bio10&quot;            &quot;bio11&quot;            &quot;bio12&quot;           </span></span>
-<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt; [13] &quot;bio13&quot;            &quot;bio14&quot;            &quot;bio15&quot;            &quot;bio16&quot;           </span></span>
-<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt; [17] &quot;bio17&quot;            &quot;bio18&quot;            &quot;bio19&quot;            &quot;temperature_01&quot;  </span></span>
-<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt; [21] &quot;temperature_02&quot;   &quot;temperature_03&quot;   &quot;temperature_04&quot;   &quot;temperature_05&quot;  </span></span>
-<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; [25] &quot;temperature_06&quot;   &quot;temperature_07&quot;   &quot;temperature_08&quot;   &quot;temperature_09&quot;  </span></span>
-<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; [29] &quot;temperature_10&quot;   &quot;temperature_11&quot;   &quot;temperature_12&quot;   &quot;precipitation_01&quot;</span></span>
-<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; [33] &quot;precipitation_02&quot; &quot;precipitation_03&quot; &quot;precipitation_04&quot; &quot;precipitation_05&quot;</span></span>
-<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; [37] &quot;precipitation_06&quot; &quot;precipitation_07&quot; &quot;precipitation_08&quot; &quot;precipitation_09&quot;</span></span>
-<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; [41] &quot;precipitation_10&quot; &quot;precipitation_11&quot; &quot;precipitation_12&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" tabindex="-1"></a><span class="fu">get_vars_for_dataset</span>(</span>
+<span id="cb17-2"><a href="#cb17-2" tabindex="-1"></a>  <span class="at">dataset =</span> <span class="st">&quot;CHELSA_2.1_UKESM1-0-LL_ssp585_0.5m&quot;</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" tabindex="-1"></a>  <span class="at">monthly =</span> <span class="cn">TRUE</span></span>
+<span id="cb17-4"><a href="#cb17-4" tabindex="-1"></a>)</span>
+<span id="cb17-5"><a href="#cb17-5" tabindex="-1"></a><span class="co">#&gt;  [1] &quot;bio01&quot;            &quot;bio02&quot;            &quot;bio03&quot;            &quot;bio04&quot;           </span></span>
+<span id="cb17-6"><a href="#cb17-6" tabindex="-1"></a><span class="co">#&gt;  [5] &quot;bio05&quot;            &quot;bio06&quot;            &quot;bio07&quot;            &quot;bio08&quot;           </span></span>
+<span id="cb17-7"><a href="#cb17-7" tabindex="-1"></a><span class="co">#&gt;  [9] &quot;bio09&quot;            &quot;bio10&quot;            &quot;bio11&quot;            &quot;bio12&quot;           </span></span>
+<span id="cb17-8"><a href="#cb17-8" tabindex="-1"></a><span class="co">#&gt; [13] &quot;bio13&quot;            &quot;bio14&quot;            &quot;bio15&quot;            &quot;bio16&quot;           </span></span>
+<span id="cb17-9"><a href="#cb17-9" tabindex="-1"></a><span class="co">#&gt; [17] &quot;bio17&quot;            &quot;bio18&quot;            &quot;bio19&quot;            &quot;temperature_01&quot;  </span></span>
+<span id="cb17-10"><a href="#cb17-10" tabindex="-1"></a><span class="co">#&gt; [21] &quot;temperature_02&quot;   &quot;temperature_03&quot;   &quot;temperature_04&quot;   &quot;temperature_05&quot;  </span></span>
+<span id="cb17-11"><a href="#cb17-11" tabindex="-1"></a><span class="co">#&gt; [25] &quot;temperature_06&quot;   &quot;temperature_07&quot;   &quot;temperature_08&quot;   &quot;temperature_09&quot;  </span></span>
+<span id="cb17-12"><a href="#cb17-12" tabindex="-1"></a><span class="co">#&gt; [29] &quot;temperature_10&quot;   &quot;temperature_11&quot;   &quot;temperature_12&quot;   &quot;precipitation_01&quot;</span></span>
+<span id="cb17-13"><a href="#cb17-13" tabindex="-1"></a><span class="co">#&gt; [33] &quot;precipitation_02&quot; &quot;precipitation_03&quot; &quot;precipitation_04&quot; &quot;precipitation_05&quot;</span></span>
+<span id="cb17-14"><a href="#cb17-14" tabindex="-1"></a><span class="co">#&gt; [37] &quot;precipitation_06&quot; &quot;precipitation_07&quot; &quot;precipitation_08&quot; &quot;precipitation_09&quot;</span></span>
+<span id="cb17-15"><a href="#cb17-15" tabindex="-1"></a><span class="co">#&gt; [41] &quot;precipitation_10&quot; &quot;precipitation_11&quot; &quot;precipitation_12&quot; &quot;npp&quot;</span></span></code></pre></div>
 <p>We can now download “bio01” and “bio02” for that dataset, using the
 virtual version, with:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" tabindex="-1"></a><span class="fu">download_dataset</span>(</span>
